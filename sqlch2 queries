@@ -1,15 +1,16 @@
---Souce Code: Murach's SQL Server 2016 for Developers ch.3 pg89
+--Souce Code: Murach's SQL Server 2016 for Developers ch.3 pg 89
 
-SQL Query 1
+--SQL Query 1: This query retrieves data from a table that falls between specifific dates and orders the data ascending by the date
 
 SELECT InvoiceNumber, InvoiceDate, InvoiceTotal 
 FROM Invoices
 WHERE InvoiceDate BETWEEN '2016-01-01' AND '2016-05-31'
 ORDER BY InvoiceDate;
 
---This query retrieves data from a table that falls between specifific dates and orders the data ascending by the date
 /* This selects data from the InvoiceNumber, InvoiceDate, and InvoiceTotal columns from the table named Invoices.
 The WHERE acts as a filter for the data from the columns and only retrieves data where the dates int he InvoiceDate column is
 between  Jan.1st 2016 and May 31st 2016. Then this data is arranged in ascending order by the InvoiceDate, as shown by the ORDER BY clause
 */
+/* ------Sample Output:
+
 
