@@ -1,0 +1,25 @@
+--Source Code: Murach's SQL Server 2016 for Developers pg 133 figure 4-4
+--SQL Query 3: This demonstrates how to join data from two tables 
+
+SELECT InvoiceNumber, InvoiceDate,
+    InvoiceTotal, InvoiceLineItemAmount
+FROM Invoices JOIN InvoiceLineItems AS LineItems
+    ON (Invoices.InvoiceID = LineItems.InvoiceID) AND
+       (Invoices.InvoiceTotal > LineItems.InvoiceLineItemAmount)
+ORDER BY InvoiceNumber;
+/*
+
+*/
+
+
+
+/*---------Sample Output
+InvoiceNumber	InvoiceDate	InvoiceTotal	InvoiceLineItemAmount
+97/522	2016-02-28 00:00:00	1962.13	1197.00
+97/522	2016-02-28 00:00:00	1962.13	765.13
+I77271-O01	2015-12-26 00:00:00	662.00	50.00
+I77271-O01	2015-12-26 00:00:00	662.00	75.60
+I77271-O01	2015-12-26 00:00:00	662.00	58.40
+I77271-O01	2015-12-26 00:00:00	662.00	478.00
+*/
+
