@@ -1,0 +1,25 @@
+SQL Query 
+
+source: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_join_left
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders
+ON Customers.CustomerID=Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+*/This query specifies the column names from both tables that are to be used in the left join. 
+
+
+/*---------Sample Output (first 10 rows) 
+CustomerName	OrderID
+Alfreds Futterkiste	null
+Ana Trujillo Emparedados y helados	10308
+Antonio Moreno Taquería	10365
+Around the Horn	10355
+Around the Horn	10383
+B's Beverages	10289
+Berglunds snabbköp	10278
+Berglunds snabbköp	10280
+Berglunds snabbköp	10384
+*/
