@@ -2,13 +2,21 @@ SQL Query
 
 source: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_join_left
 
+--This shows a left join between the Customers and Orders table based on the CustomerID, selecting the CustomerName and OrderID column 
+--and ordering the result by the first column 
+
 SELECT Customers.CustomerName, Orders.OrderID
 FROM Customers
 LEFT JOIN Orders
 ON Customers.CustomerID=Orders.CustomerID
 ORDER BY Customers.CustomerName;
 
-*/This query specifies the column names from both tables that are to be used in the left join. 
+/*This query specifies the column names from both tables that are to be used in the left join by using the format
+Table1.ColumnName, Table2.ColumnName. This specification helps clarify what table each column corresponds to
+As a left join, it means that all records FROM the customers table are included and those that match to the Orders table
+are included as well. The join condition is where the CustomerID matches in both tables. Finally, the results are ORDERed BY the 
+CustomerName column that corresponds to the Customers table. 
+*/
 
 
 /*---------Sample Output (first 10 rows) 
