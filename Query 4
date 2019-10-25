@@ -1,6 +1,6 @@
 --Souce Code: Murach's SQL Server 2016 for Developers ch.3 pg 89
 
---SQL Query 1: This query retrieves data from a table that falls between specifific dates and orders the data ascending by the date
+--SQL Query This query retrieves data from a table that falls between specifific dates and orders the data ascending by the date
 
 SELECT InvoiceNumber, InvoiceDate, InvoiceTotal 
 FROM Invoices
