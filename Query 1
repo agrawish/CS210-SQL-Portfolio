@@ -1,6 +1,6 @@
 --Souce Code: Murach's SQL Server 2016 for Developers ch.2
 
---SQL Query 2: This query retrieves data from a table demonstrating the use of a column alias
+--SQL Query This query retrieves data from a table demonstrating the use of a column alias and a search condition shown by the WHERE clause
 
 SELECT InvoiceNumber, InvoiceDate, InvoiceTotal, PaymentTotal, CreditTotal, 
        InvoiceTotal - PaymentTotal - CreditTotal AS BalanceDue
