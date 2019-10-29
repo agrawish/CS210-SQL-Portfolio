@@ -1,4 +1,4 @@
-Query 7
+Query 7 
 USE Examples;
 
 	SELECT CustomerFirst, CustomerLast 
