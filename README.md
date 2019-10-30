@@ -6,3 +6,5 @@ The portfolio project must contain:
 4. summarize your changes and improvements to the program
 5. the final source code of the sample program (as the last check in version)
 6. a terminal comment containing the sample program output
+
+I do not own the rights to any of the code presented
