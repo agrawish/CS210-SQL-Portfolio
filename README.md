@@ -7,5 +7,8 @@ The portfolio project must contain:
 5. the final source code of the sample program (as the last check in version)
 6. a terminal comment containing the sample program output
 
-I do not own the rights to any of the code presented
+DISCLAIMER
+Original Code is not owned by me
+Augmented code is a combination of original source code and changed or additions made by me that may 
+come from other sources
 
