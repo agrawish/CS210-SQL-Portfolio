@@ -32,4 +32,88 @@ Berglunds snabbköp	                  10280
 Berglunds snabbköp	                  10384
 */
 
-Augmented: 
+Augmented:
+SELECT Customers.CustomerName, Orders.OrderID, Customers.Country
+FROM Customers
+LEFT JOIN Orders
+ON Customers.CustomerID=Orders.CustomerID
+where Customers.Country='Germany' or Customers.Country='France' or Customers.Country='Spain'
+ORDER BY Customers.CustomerName;
+
+I augmented the program by adding a where clause to filter the results out further, only choosing those customers whose
+country was listed as Germany, france, or Spain, and to make this clear I selected the Country column form the Customers table.
+
+
+-----------Augmented Sample Output (first ten rows)
+CustomerName	OrderID	Country
+Alfreds Futterkiste 		Germany 
+Blauer See Delikatessen 		Germany 
+Blondel père et fils 	10360 	France 
+Blondel père et fils 	10265 	France 
+Blondel père et fils 	10297 	France 
+Blondel père et fils 	10436 	France 
+Bólido Comidas preparadas 	10326 	Spain 
+Bon app' 	10331 	France 
+Bon app' 	10340 	France 
+Bon app' 	10362 	France 
+______________________________________________________________________________________________________________________________________
+
+--Source Code: Murach's SQL Server 2016 for Developers pg 133 figure 4-4
+--SQL Query--This demonstrates how to join data from two tables with two join conditions and an order by clause 
+
+SELECT InvoiceNumber, InvoiceDate,
+    InvoiceTotal, InvoiceLineItemAmount
+FROM Invoices JOIN InvoiceLineItems AS LineItems
+    ON (Invoices.InvoiceID = LineItems.InvoiceID) AND
+       (Invoices.InvoiceTotal > LineItems.InvoiceLineItemAmount)
+ORDER BY InvoiceNumber;
+/*
+
+This query selects the InvoiceNumber, InvoiceDate, InvoiceTotal, and InvoiceLine ItemAmount columns to retrieve data from.
+It JOINs data from the Invoices and InvoiceLineItems table using an inner join. With an inner join one may write the INNER keyword
+but it is not required.The AS shows a column alias, shortening the name of the second table to 
+LineItems and then using that throughout the query. There are them two join conditions. The first is that the invoiceID has to match 
+in both tables. The second is that the InvoiceTotal from the Invoices table has to be larger than the InvoiceLineItemAmount from 
+the LineItems table. 
+*/
+
+/*---------Sample Output
+
+InvoiceNumber	InvoiceDate	InvoiceTotal	InvoiceLineItemAmount
+97/522	2016-02-28 00:00:00	1962.13	1197.00
+97/522	2016-02-28 00:00:00	1962.13	765.13
+I77271-O01	2015-12-26 00:00:00	662.00	50.00
+I77271-O01	2015-12-26 00:00:00	662.00	75.60
+I77271-O01	2015-12-26 00:00:00	662.00	58.40
+I77271-O01	2015-12-26 00:00:00	662.00	478.00
+*/
+
+Augmented:
+
+SELECT LineItems.InvoiceID, LineItems.AccountNo,
+    LineItems.InvoiceLineItemAmount, GLA.AccountDescription
+FROM InvoiceLineItems AS LineItems JOIN GLAccounts AS GLA
+    ON (LineItems.AccountNo = GLA.AccountNo) 
+	AND (LineItems.InvoiceLineItemAmount > 1000)
+ORDER BY LineItems.InvoiceID;
+
+*/For my changes I chose to do the join changing which tables I join and changing the conditions. Seelcting
+the InvoiceID and LineItemAmount columns from the LineItems table and the AccountDescription column form the GLA table
+I joined the InvoiceLineItems with the GLACcounts table, (which was given the alias GLA) instead of joining the Invoices table
+with the InvoiceLineItems table.I choose to match up the AccountNo following the format of the first join condition
+in the first query and replaced the second join condition a statement that would filter the result set to only include 
+those rows with a line item amount of over 1000 (this I could have put as a WHERE clause).
+Then I ordered by the InvoiceID from the LineItems table. 
+
+-------Augmented Sample output (first ten rows)
+InvoiceID	AccountNo	InvoiceLineItemAmount	AccountDescription
+1	553	3813.33	Freight
+21	589	4901.26	Outside Services
+24	520	1750.00	Building Lease
+31	589	7125.34	Outside Services
+35	507	1600.00	UCI
+39	400	37966.19	Book Printing Costs
+43	400	21842.00	Book Printing Costs
+45	553	2765.36	Freight
+47	572	1575.00	Books, Dues, and Subscriptions
+51	553	2184.11	Freight
