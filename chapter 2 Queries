@@ -1,0 +1,117 @@
+--Souce Code: Murach's SQL Server 2016 for Developers ch.2
+
+--SQL Query This query shows using a column alias for the balance due and a search condition in the WHERE clause using the calculation to find the balance due
+
+SELECT InvoiceNumber, InvoiceDate, InvoiceTotal, PaymentTotal, CreditTotal, 
+       InvoiceTotal - PaymentTotal - CreditTotal AS BalanceDue
+FROM Invoices
+WHERE InvoiceTotal - PaymentTotal - CreditTotal  > 0
+ORDER BY InvoiceDate;
+
+*/This query SELECTS data from the InvoiceNumber, InvoiceDate, InvoiceTotal, PaymentTotal, and CreditTotal columns
+as well as the BalanceDue column. This column is not defined in the base table Invoices from which we are getting the data FROM. 
+Instead, BalanceDue is defined in the second line as the InvoiveTotal column minus the Paymenttotal column minus the CreditTotal column. 
+Then the WHERE applies a filter to that data, selecting only data where the BalanceDue is greater than zero. Lastly, the data is put 
+in ascending order by the date (InvoiceDate).  You cannot use BalanceDue in place of 
+InvoiceTotal - PaymentTotal - CreditTotal AS BalanceDue because it is simply a column alias. 
+If you did not specify the column name BalanceDue for the calculated column, 
+then it would still display the values after executing the queries, it just would display (No column name)
+*/
+
+/*---------Sample Output
+InvoiceNumber	InvoiceDate	InvoiceTotal	PaymentTotal	CreditTotal	BalanceDue
+39104	2016-03-10 00:00:00	85.31	0.00	0.00	85.31
+963253264	2016-03-18 00:00:00	52.25	0.00	0.00	52.25
+31361833	2016-03-21 00:00:00	579.42	0.00	0.00	579.42
+263253268	2016-03-21 00:00:00	59.97	0.00	0.00	59.97
+263253270	2016-03-22 00:00:00	67.92	0.00	0.00	67.92
+263253273	2016-03-22 00:00:00	30.75	0.00	0.00	30.75
+P-0608	2016-03-23 00:00:00	20551.18	0.00	1200.00	19351.18
+9982771	2016-03-24 00:00:00	503.20	0.00	0.00	503.20
+134116	2016-03-28 00:00:00	90.36	0.00	0.00	90.36
+0-2436	2016-03-31 00:00:00	10976.06	0.00	0.00	10976.06
+547480102	2016-04-01 00:00:00	224.00	0.00	0.00	224.00
+
+Augmented:
+SELECT InvoiceNumber AS Number, InvoiceDate AS Date, InvoiceTotal AS Total, CreditTotal as Credit, 
+       InvoiceTotal - PaymentTotal - CreditTotal AS BalanceDue
+FROM Invoices
+WHERE InvoiceTotal - PaymentTotal - CreditTotal  > 0 and PaymentTotal=0
+ORDER BY BalanceDue DESC;
+
+*/Here I added a couple column alias's to shorten the column names because they were all from the Invoices table and 
+kept repeating Invoices at the beginning of the name and because they didn't change the meaning of the column. I took off 
+selecting the payment due becuase it was zero for all of the invoices with a balalnce due and instead put it as another part 
+of the where clause to select only those invoices where there had been no payment. Laslty to see which invoices were the most urgent 
+(had the greatest outstanding balance) I ordered the BalanceDue desc and got rid of ordering it by the InvoiceDate instead. 
+
+Augmented Sample Output:
+Number	Date	Total	Credit	BalanceDue
+P-0608	2016-03-23 00:00:00	20551.18	1200.00	19351.18
+0-2436	2016-03-31 00:00:00	10976.06	0.00	10976.06
+31361833	2016-03-21 00:00:00	579.42	0.00	579.42
+9982771	2016-03-24 00:00:00	503.20	0.00	503.20
+547480102	2016-04-01 00:00:00	224.00	0.00	224.00
+134116	2016-03-28 00:00:00	90.36	0.00	90.36
+39104	2016-03-10 00:00:00	85.31	0.00	85.31
+263253270	2016-03-22 00:00:00	67.92	0.00	67.92
+263253268	2016-03-21 00:00:00	59.97	0.00	59.97
+963253264	2016-03-18 00:00:00	52.25	0.00	52.25
+263253273	2016-03-22 00:00:00	30.75	0.00	30.75
+
+___________________________________________________________________________________________________________________________
+
+Another query from Murach's SQL Server 2016 for Developers Ch. 2
+--This query shows how to use the where clause to only choose vendors from California and then order them by their ID
+
+USE AP;
+
+SELECT *
+FROM Vendors
+WHERE VendorState = 'CA'
+ORDER BY VendorID;
+
+/*This selects all the data from the Vendors table if the field in the VendorState column is CA. It is important to put this in 
+quotes since this is a literal value, not a number. After, the order by organizes the data in order by the VendorID. The default 
+is ascending so one must not need to put that, but one will have to if it were descending. 
+
+Sample Output-----first ten rows
+
+VendorID	VendorName	VendorAddress1	VendorAddress2	VendorCity	VendorState	VendorZipCode	VendorPhone	VendorContactLName	VendorContactFName	DefaultTermsID	DefaultAccountNo
+4	Jobtrak	1990 Westwood Blvd Ste 260	NULL	Los Angeles	CA	90025	(800) 555-8725	Quinn	Kenzie	3	572
+6	California Chamber Of Commerce	3255 Ramos Cir	NULL	Sacramento	CA	95827	(916) 555-6670	Mauro	Anton	3	572
+7	Towne Advertiser's Mailing Svcs	Kevin Minder	3441 W Macarthur Blvd	Santa Ana	CA	92704	NULL	Maegen	Ted	3	540
+8	BFI Industries	PO Box 9369	NULL	Fresno	CA	93792	(559) 555-1551	Kaleigh	Erick	3	521
+9	Pacific Gas & Electric	Box 52001	NULL	San Francisco	CA	94152	(800) 555-6081	Anthoni	Kaitlyn	3	521
+10	Robbins Mobile Lock And Key	4669 N Fresno	NULL	Fresno	CA	93726	(559) 555-9375	Leigh	Bill	2	523
+11	Bill Marvin Electric Inc	4583 E Home	NULL	Fresno	CA	93703	(559) 555-5106	Hostlery	Kaitlin	2	523
+12	City Of Fresno	PO Box 2069	NULL	Fresno	CA	93718	(559) 555-9999	Mayte	Kendall	3	574
+13	Golden Eagle Insurance Co	PO Box 85826	NULL	San Diego	CA	92186	NULL	Blanca	Korah	3	590
+14	Expedata Inc	4420 N. First Street, Suite 108	NULL	Fresno	CA	93726	(559) 555-9586	Quintin	Marvin	3	589
+
+
+Augmented Code
+USE AP;
+
+SELECT VendorID, VendorName, VendorPhone, VendorContactFName + ' ' + VendorContactLName AS ContactName, DefaultAccountNo 
+FROM Vendors
+WHERE VendorState = 'CA'
+ORDER BY VendorID;
+
+/*I changed this query by removing the * and replacing it with specific columns to retreieve becuase the select all is not only 
+inefficient, but it was cluttering up the data. Instead I selected the ID, name, phone number, account number, and the vendors' 
+contact name. The contact name is an alias which I created by concatenating the frst and last name of the contact name with a space
+in between into one column (using page 95 to do so)
+
+Augmented Sample Output first ten rows
+VendorID     VendorName	                        VendorPhone	ContactName	DefaultAccountNo
+4      	Jobtrak	                     (800) 555-8725	Kenzie Quinn	      572
+6	       California Chamber Of Commerce	(916) 555-6670	Anton Mauro	      572
+7	       Towne Advertiser's Mailing Svcs	          NULL	Ted Maegen	      540
+8	       BFI Industries                      (559) 555-1551	Erick Kaleigh	       521
+9	       Pacific Gas & Electric	        (800) 555-6081	Kaitlyn Anthoni	521
+10	       Robbins Mobile Lock And Key	          (559) 555-9375	Bill Leigh	       523
+11	       Bill Marvin Electric Inc	         (559) 555-5106	Kaitlin Hostlery	523
+12	       City Of Fresno	                (559) 555-9999	Kendall Mayte	       574
+13	       Golden Eagle Insurance Co	                  NULL	Korah Blanca	       590
+14	       Expedata Inc	                        (559) 555-9586	Marvin Quintin	589
