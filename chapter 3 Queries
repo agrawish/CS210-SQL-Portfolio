@@ -1,0 +1,51 @@
+SQl Query from Murach's SQL Server 2016 for Developers page 89 figure 3-2 #4
+
+--This query demonstrates the use of the Between operator to retrieve data for invoices between two specific dates
+
+SELECT InvoiceNumber, InvoiceDate, InvoiceTotal
+FROM Invoices
+WHERE InvoiceDate BETWEEN '2016-01-01' AND '2016-05-31'
+ORDER BY InvoiceDate;
+
+/*This query selects the Invoicenumber, InvoiceDate, and InvoiceTotal from the Invoices table only including those results 
+where the dates fall between January 1st 2016 and May 31st 2016. The reuslts are them placed in order by the date: earliest to latest
+
+------Sample Output: (first ten rows)
+InvoiceNumber	InvoiceDate	InvoiceTotal
+25022117	2016-01-01 00:00:00	6.00
+P02-88D77S7	2016-01-03 00:00:00	856.92
+21-4748363	2016-01-03 00:00:00	9.95
+4-321-2596	2016-01-05 00:00:00	10.00
+963253242	2016-01-06 00:00:00	104.00
+QP58872	2016-01-07 00:00:00	116.54
+24863706	2016-01-10 00:00:00	6.00
+10843	2016-01-11 00:00:00	4901.26
+963253235	2016-01-11 00:00:00	108.25
+21-4923721	2016-01-13 00:00:00	9.95
+
+Augmented Code:
+
+SELECT InvoiceNumber, InvoiceDate, InvoiceTotal
+FROM Invoices
+WHERE InvoiceDate >= '2016-01-01' OR InvoiceDate<= '2016-05-31'
+ORDER BY InvoiceDate;
+
+I changed this program in the where clause by replacing the Between operator with an AND statement to get data from between the 
+same dates. I used the greater than or equal to operator to make sure I get dates that start at the earliest January 1st 2016
+and then used the less than or equal to operator to get dates that are at the latest May 31st 2016, with the AND showing it 
+can be any date that falls between those two dates. This just shows another way to write the same thing. 
+
+------Augmented Sample Output: (first ten rows)
+InvoiceNumber	InvoiceDate	InvoiceTotal
+25022117	2016-01-01 00:00:00	6.00
+P02-88D77S7	2016-01-03 00:00:00	856.92
+21-4748363	2016-01-03 00:00:00	9.95
+4-321-2596	2016-01-05 00:00:00	10.00
+963253242	2016-01-06 00:00:00	104.00
+QP58872	2016-01-07 00:00:00	116.54
+24863706	2016-01-10 00:00:00	6.00
+10843	2016-01-11 00:00:00	4901.26
+963253235	2016-01-11 00:00:00	108.25
+21-4923721	2016-01-13 00:00:00	9.95
+
+______________________________________________________________________________________________________________________________________
