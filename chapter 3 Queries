@@ -49,3 +49,62 @@ QP58872	2016-01-07 00:00:00	116.54
 21-4923721	2016-01-13 00:00:00	9.95
 
 ______________________________________________________________________________________________________________________________________
+
+SQL Query from Murach's SQL Server 2016 for Developers page 99 figure 3-7 #3
+
+--This query demonstrates the use of the GETDATE and DATEDIFF functions to calcuate the age of the Invoices 
+
+SELECT InvoiceDate,
+    GETDATE() AS 'Today''s Date',
+    DATEDIFF(day, InvoiceDate, GETDATE()) AS Age
+FROM Invoices;
+
+/*This query selects the InvoiceDate column but has another column in the result set : Age. Age is determined by the difference 
+in the numbe rof days between the InvoiceDate and today's date, which is a column alias determiend by the GETDATE function which 
+get's today's date, which is why the column is named that. DATEDIFF is a fucntion that will return a value in days, shown by the first 
+paremeter in the parenthesis, and it will be a result of the difference between the 2nd and 3rd paremeter (the date of the original
+invoice and today's date). This is all done from the Invoices base table. An important thing to note is that this query will change
+as the date changes, so today;s result is and will be different from tomarrow or next year's results. 
+
+Sample Output: 
+InvoiceDate	          Today's Date	            Age
+2016-04-02 00:00:00	  2019-11-04 00:30:29.960 	1311
+2016-04-01 00:00:00	  2019-11-04 00:30:29.960	  1312
+2016-03-31 00:00:00	  2019-11-04 00:30:29.960	  1313
+2016-03-30 00:00:00	  2019-11-04 00:30:29.960	  1314
+2016-03-28 00:00:00	  2019-11-04 00:30:29.960	  1316
+2016-03-25 00:00:00	  2019-11-04 00:30:29.960	  1319
+2016-03-24 00:00:00	  2019-11-04 00:30:29.960	  1320
+2016-03-24 00:00:00	  2019-11-04 00:30:29.960	  1320
+2016-03-24 00:00:00	  2019-11-04 00:30:29.960	  1320
+2016-03-24 00:00:00	  2019-11-04 00:30:29.960	  1320
+
+Augmented Code: 
+SELECT InvoiceDate, (InvoiceTotal-PaymentTotal-CreditTotal) AS BalanceDue,
+    GETDATE() AS 'Today''s Date',
+    DATEDIFF(day, InvoiceDate, GETDATE()) AS Age
+FROM Invoices
+where InvoiceTotal-PaymentTotal-CreditTotal >0; 
+
+/* I expanded the functionality of the program by adding in what the outstanding balance was so that we could see how old the
+invoices were in days that still had a balnce due. So I used the calculation Murach uses repeatedly
+((InvoiceTotal-PaymentTotal-CreditTotal) AS BalanceDue) to select that column as well and only include those rows 
+in the result set where the BalanceDue was greater than zero (shown by the added where clause).
+
+--------Augmented Sample Output: All 11 rows
+ InvoiceDate	BalanceDue	Today's Date	Age
+2016-03-10 00:00:00	85.31	2019-11-04 01:14:12.470	1334
+2016-03-18 00:00:00	52.25	2019-11-04 01:14:12.470	1326
+2016-03-21 00:00:00	579.42	2019-11-04 01:14:12.470	1323
+2016-03-21 00:00:00	59.97	2019-11-04 01:14:12.470	1323
+2016-03-22 00:00:00	67.92	2019-11-04 01:14:12.470	1322
+2016-03-22 00:00:00	30.75	2019-11-04 01:14:12.470	1322
+2016-03-23 00:00:00	19351.18	2019-11-04 01:14:12.470	1321
+2016-03-24 00:00:00	503.20	2019-11-04 01:14:12.470	1320
+2016-03-28 00:00:00	90.36	2019-11-04 01:14:12.470	1316
+2016-03-31 00:00:00	10976.06	2019-11-04 01:14:12.470	1313
+2016-04-01 00:00:00	224.00	2019-11-04 01:14:12.470	1312  
+*/
+
+
+
