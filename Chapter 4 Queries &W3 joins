@@ -134,3 +134,22 @@ ORDER BY InvoiceTotal DESC;
 
 */This query has a syntax with two select statements where all the rows returned by the first set of select statements are 
 combined with the rows returned by the second set of select statements.  
+_________________________________________________________________________________________________________________________________
+SQL Query---from Murach's SQL Server 2016 for Developers page 155
+
+--This query demonstrates the EXCEPT clause and how it filters out any customers who happen to be in the employees table as well
+
+USE Examples;
+
+	SELECT CustomerFirst, CustomerLast 
+	FROM Customers
+EXCEPT
+	SELECT FirstName, LastName 
+	FROM Employees
+ORDER BY CustomerLast;
+
+This is using the examples database. There are two select statements. The first says to select the CustomerFirst and CustomerLast
+columns from the Customers table but 
+
+
+____________________________________________________________________________________________________________________________
