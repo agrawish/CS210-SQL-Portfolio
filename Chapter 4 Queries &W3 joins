@@ -153,3 +153,16 @@ columns from the Customers table but
 
 
 ____________________________________________________________________________________________________________________________
+
+SQL Query
+--This query shows how to use the intersect clause to only include rows that have matching fields from both set of select statments
+
+USE Examples;
+
+	SELECT CustomerFirst, CustomerLast 
+	FROM Customers
+INTERSECT
+	SELECT FirstName, LastName 
+	FROM Employees;
+	
+__________________________________________________________________________________________________________________________
