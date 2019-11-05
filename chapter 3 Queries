@@ -64,7 +64,9 @@ in the numbe rof days between the InvoiceDate and today's date, which is a colum
 get's today's date, which is why the column is named that. DATEDIFF is a fucntion that will return a value in days, shown by the first 
 paremeter in the parenthesis, and it will be a result of the difference between the 2nd and 3rd paremeter (the date of the original
 invoice and today's date). This is all done from the Invoices base table. An important thing to note is that this query will change
-as the date changes, so today;s result is and will be different from tomarrow or next year's results. 
+as the date changes, so today;s result is and will be different from tomarrow or next year's results. Also, since by default it 
+takes the date as the date and 00:00 you should be careful when using this function to make sure ALL dates with different times
+are included in the query as well (if thats what you wish)
 
 Sample Output: 
 InvoiceDate	          Today's Date	            Age
@@ -105,6 +107,110 @@ in the result set where the BalanceDue was greater than zero (shown by the added
 2016-03-31 00:00:00	10976.06	2019-11-04 01:14:12.470	1313
 2016-04-01 00:00:00	224.00	2019-11-04 01:14:12.470	1312  
 */
+
+________________________________________________________________________________________________________________________________
+
+SQL Query from Murach's SQL Server 2016 for Developers page 97 figure 3-6 c
+
+--This query shows how order of operations are a default and can be overriden by parentheses to get completely different values
+
+SELECT InvoiceID,
+    InvoiceID + 7 * 3 AS OrderOfPrecedence,
+    (InvoiceID + 7) * 3 AS AddFirst
+FROM Invoices
+ORDER BY InvoiceID;
+
+/*This query shows how the default order of operations gives some value for the InvoiceID after using it in calculations
+while the same thing with parenthesus around the adding makes it give different values to the InvoiceID. With order of 
+operations, multiplication takes precedence over adding and so if you have addition with it, you will not get the same value
+as if you add firstad then multiply. This is all reguarding the InvoiceID from the Invoices table and places the result set 
+in order by from the smallest to largest InvoiceID. 
+
+-------Sample Output: First ten rows 
+InvoiceID	OrderOfPrecedence	AddFirst
+1	            22	                24
+2	            23                 	27
+3	            24              	30
+4	            25	                33
+5	            26	                36
+6	            27	                39
+7	            28	                42
+8	            29	                45
+9	            30	                48
+10	            31	                51
+
+Augmented Code:
+
+SELECT InvoiceID,
+    InvoiceID + 7 * 3 AS OrderOfPrecedence,
+    (InvoiceID + 7) * 3 AS AddFirst,
+	InvoiceID + 7 * 3 /5 AS OrderWithDivision
+FROM Invoices
+ORDER BY InvoiceID;
+
+Here I added a column OrderWithDivision to show how having division changes the order of operations. Division takes precedence 
+over multiplication so when I defined that column as InvoiceID + 7 * 3 /5 AS OrderWithDivision it meant that it would first 
+do 3/5, then multiply that result to 7 and then add that result to the InvoiceID. If I did not want this I could put 
+parenthesis to clarify what order I DID want it in.
+
+Augmented Sampel Output : First ten rows
+InvoiceID	OrderOfPrecedence	AddFirst	OrderWithDivision
+1	            22	                24	                5
+2	            23	                27	                6
+3	            24	                30	                7
+4	            25	                33	                8
+5	            26	                36	                9
+6	            27	                39	                10
+7	            28	                42	                11
+8	            29	                45	                12
+9	            30	                48	                13
+10	            31	                51	                14
+
+__________________________________________________________________________________________________________________________________
+
+SQL Query from Murach's SQL Server 2016 for Developers page 103 figure 3-9 a
+--This query demonstrates the use of the TOP clause, showing it can retrieve a specific amount of rows from a result set
+
+SELECT TOP 5 VendorID, InvoiceTotal
+FROM Invoices
+ORDER BY InvoiceTotal DESC;
+
+----------Sample output (all rows) 
+VendorID	InvoiceTotal
+110         	37966.19
+110         	26881.40
+110         	23517.58
+72          	21842.00
+110         	20551.18
+
+This query uses the TOP clause which just retrieves a set number of rows which is specified in this case to be 5. 
+So it will select the top 5 rows from the Invoices table, selecting only the VendorID and InvoiceTotal columns and 
+only after the the InvoiceTotal largest to smallest. Without the Order by, the query would not be as useful
+becuase the rows would be mixed up and essentially would select 5 random rows after applying all the search conditions. 
+This will give me the top five highest invoice totals. 
+
+Augmented Code:
+
+SELECT TOP 5 VendorID, InvoiceTotal
+FROM Invoices
+ORDER BY InvoiceTotal;
+
+I changed the code by ordering the result set by the InvoiceTotal ascending instead of descending,
+which will give me the five lowest invoice totals.
+This shows the importance of the order by clause when using the TOP clause so that you get meaningful results. 
+
+------Augmented Sample Output (all rows)
+VendorID	InvoiceTotal
+115	        6.00
+115	        6.00
+115     	6.00
+97	        9.95
+97	        9.95
+
+_________________________________________________________________________________________________________________________________
+
+
+
 
 
 
