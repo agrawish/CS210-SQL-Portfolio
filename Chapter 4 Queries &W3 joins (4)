@@ -203,7 +203,10 @@ EXCEPT
 ORDER BY CustomerLast;
 
 This is using the examples database. There are two select statements. The first says to select the CustomerFirst and CustomerLast
-columns from the Customers table but 
+columns from the Customers table but then the second says to select the FirstName and LastName from the Employees table, when 
+actually, this query will filter out any rows if the FirstName and LastName match those in the Customerfirst and CustomerLast columns,
+as designated by the EXCEPT. All the rows from the first part of the query EXCEPT those that match up to the results from the second 
+query are included in the final result set. 
 
 -----Sample Output: First ten rows
 CustomerFirst	CustomerLast
@@ -232,9 +235,31 @@ INTERSECT
 	SELECT FirstName, LastName 
 	FROM Employees;
 	
+This query kind of does the opposite of the EXCEPT Clause. The reuslt of this query is exactly the row that the except query 
+takes out of the result yet. In this query, the CustomerFirst and CustomerLast columns of thr Customers table
+are selected and if their fields match up with the fields in the FirstName and LastName columns of the Employees table,
+then only those corresponding rows go in the result set. So here, Thomas Hardy was the only First and Last name that was matched 
+in the Customers and Employees table, so it was the only one included in the result set.
+
 -----Sample Output: all rows (this is the only row in the result set)
 CustomerFirst	CustomerLast
 Thomas		Hardy
+
+Augmented Code:
+Select CustomerFirst, CustomerLast 
+	From Customers inner join  Employees
+	ON Customers.CustomerFirst=Employees.FirstName
+	AND Customers.CustomerLast=Employees.LastName;
 	
+I changed the program by writing an query with an inner join joining the Customers and Employees tables
+that gets the same result as the original query.I used the search condition 
+Customers.CustomerFirst=Employees.FirstName AND the condition Customers.CustomerLast=Employees.LastName which 
+conceptually is what the intersect operator does becuase if those fields match, only then are those rows inclued in the result set, 
+which is what an inner join those. As you can see, both result sets return Thomas Hardy.
+
+
+-------Augmented Sample Output (all rows..this is the only row in the result set)
+CustomerFirst	CustomerLast
+Thomas		Hardy
 	
 __________________________________________________________________________________________________________________________
