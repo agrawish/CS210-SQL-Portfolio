@@ -134,8 +134,23 @@ ORDER BY InvoiceTotal DESC;
 
 */This query has a syntax with two select statements where all the rows returned by the first set of select statements are 
 combined with the rows returned by the second set of select statements.  
+
+--------Sample Output: first ten rows
+Source	InvoiceNumber	InvoiceDate	InvoiceTotal
+Paid	0-2058	2016-01-28 00:00:00	37966.19
+Paid	P-0259	2016-03-19 00:00:00	26881.40
+Paid	0-2060	2016-03-24 00:00:00	23517.58
+Paid	40318	2016-02-01 00:00:00	21842.00
+Active	P-0608	2016-03-23 00:00:00	20551.18
+Active	0-2436	2016-03-31 00:00:00	10976.06
+Paid	P02-3772	2016-01-21 00:00:00	7125.34
+Paid	509786	2016-02-18 00:00:00	6940.25
+Paid	10843	2016-01-11 00:00:00	4901.26
+Paid	989319-457	2015-12-08 00:00:00	3813.33
+
+
 _________________________________________________________________________________________________________________________________
-SQL Query---from Murach's SQL Server 2016 for Developers page 155
+SQL Query---from Murach's SQL Server 2016 for Developers page 155 Figure 4-15 a
 
 --This query demonstrates the EXCEPT clause and how it filters out any customers who happen to be in the employees table as well
 
@@ -151,10 +166,23 @@ ORDER BY CustomerLast;
 This is using the examples database. There are two select statements. The first says to select the CustomerFirst and CustomerLast
 columns from the Customers table but 
 
+-----Sample Output: First ten rows
+CustomerFirst	CustomerLast
+Maria		Anders
+Christina	Berglund
+Art		Braunschweiger
+Donna		Chelan
+Fred		Citeaux
+Karl		Jablonski
+Yoshi		Latimer
+Laurence	Lebihan
+Elizabeth	Lincoln
+Hanna		Moos
+
 
 ____________________________________________________________________________________________________________________________
 
-SQL Query
+SQL Query from Murach's SQL Server 2016 for Developers page 155 Figure 4-15 b
 --This query shows how to use the intersect clause to only include rows that have matching fields from both set of select statments
 
 USE Examples;
@@ -164,5 +192,10 @@ USE Examples;
 INTERSECT
 	SELECT FirstName, LastName 
 	FROM Employees;
+	
+-----Sample Output: all rows (this is the only row in the result set)
+CustomerFirst	CustomerLast
+Thomas		Hardy
+	
 	
 __________________________________________________________________________________________________________________________
