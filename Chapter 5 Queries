@@ -1,1 +1,10 @@
+SQL Query from Murach's SQL Server for Developers 2016 figure 5-1 page 161
+--This query 
+
+SELECT COUNT(*) AS NumberOfInvoices,
+  SUM(InvoiceTotal-PaymentTotal-CreditTotal) AS TotalDue
+FROM Invoices
+WHERE InvoiceTotal-PaymentTotal-CreditTotal >0;
+
+
 
