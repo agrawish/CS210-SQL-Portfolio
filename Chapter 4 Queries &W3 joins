@@ -121,6 +121,8 @@ ________________________________________________________________________________
 
 SQL Query----from Murach's SQL Server 2016 for Developers figure 4-14 page 153
 
+This query joins data from the same table with a UNION clause to determined whether an invoice is paid or active
+
 USE AP; 
 
     SELECT 'Active' AS Source, InvoiceNumber, InvoiceDate, InvoiceTotal
@@ -133,7 +135,15 @@ UNION
 ORDER BY InvoiceTotal DESC;
 
 */This query has a syntax with two select statements where all the rows returned by the first set of select statements are 
-combined with the rows returned by the second set of select statements.  
+combined with the rows returned by the second set of select statements, both from the same table. It joins the data and 
+differentiates what the paid invoices are with the active ones. This is done by adding a column named Source, which is 
+comprised of either: the value 'Active', where the fact that there is still a balance due (shown
+by the where clause in the first query) makes it an active invoice, or the value 'Paid', where the fact that their is not
+a balance due (shown by the where cause in the second query) makes it a paid invoice. So for the rows that have a outstanding 
+balance, they will have a Active in the row for the Source column and htose without one will have a Paid written in place. 
+In addition, the colukns InvoiceNumber, InvoiceDate, and InvoiceTotal are selected from the Invoices table. After all of this, the
+rows form the two parts of this query are joined together by the UNION to make it one result set and then the results are 
+ordered by the InvoiceTotal in descending order.
 
 --------Sample Output: first ten rows
 Source	InvoiceNumber	InvoiceDate	InvoiceTotal
@@ -143,11 +153,40 @@ Paid	0-2060	2016-03-24 00:00:00	23517.58
 Paid	40318	2016-02-01 00:00:00	21842.00
 Active	P-0608	2016-03-23 00:00:00	20551.18
 Active	0-2436	2016-03-31 00:00:00	10976.06
-Paid	P02-3772	2016-01-21 00:00:00	7125.34
+Paid	P02-377 2016-01-21 00:00:00	7125.34
 Paid	509786	2016-02-18 00:00:00	6940.25
 Paid	10843	2016-01-11 00:00:00	4901.26
-Paid	989319-457	2015-12-08 00:00:00	3813.33
+Paid	989319-457 2015-12-08 00:00:00	3813.33
 
+Augmented Code: 
+USE AP; 
+
+    SELECT 'Recent' AS Relevance, InvoiceNumber, InvoiceDate, InvoiceTotal
+    FROM Invoices
+    WHERE InvoiceDate >= '2016-02-01'
+UNION
+    SELECT 'Old' AS Relevance, InvoiceNumber, InvoiceDate, InvoiceTotal
+    FROM Invoices
+    WHERE InvoiceDate < '2016-02-01'
+ORDER BY InvoiceTotal DESC;
+
+For this I augmented the code by following the same code structure to figure out something else: whether an invoice would be 
+considered old or recent based on its date. So I put a search condition in the where clause defining an invoice as 'Recent'
+if it was on or after Feburary 1st 2016 and defining one as 'Old' if it was before that date. These values would make up the 
+column Relevance, which in the old query was named Source, naming it Relevance to see how relevant the invoice is in terms of time.
+
+-------Augmented Source Code:
+Relevance	InvoiceNumber	InvoiceDate	InvoiceTotal
+Old	0-2058	2016-01-28 00:00:00	37966.19
+Recent	P-0259	2016-03-19 00:00:00	26881.40
+Recent	0-2060	2016-03-24 00:00:00	23517.58
+Recent	40318	2016-02-01 00:00:00	21842.00
+Recent	P-0608	2016-03-23 00:00:00	20551.18
+Recent	0-2436	2016-03-31 00:00:00	10976.06
+Old	P02-3772	2016-01-21 00:00:00	7125.34
+Recent	509786	2016-02-18 00:00:00	6940.25
+Old	10843	2016-01-11 00:00:00	4901.26
+Old	989319-457	2015-12-08 00:00:00	3813.33
 
 _________________________________________________________________________________________________________________________________
 SQL Query---from Murach's SQL Server 2016 for Developers page 155 Figure 4-15 a
