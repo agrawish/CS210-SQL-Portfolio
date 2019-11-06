@@ -43,6 +43,8 @@ ORDER BY Customers.CustomerName;
 I augmented the program by adding a where clause to filter the results out further, only choosing those customers whose
 country was listed as Germany, france, or Spain, and to make this clear I selected the Country column form the Customers table.
 
+inspired by W3Schools
+
 
 -----------Augmented Sample Output (first ten rows)
 CustomerName	OrderID	Country
@@ -221,6 +223,29 @@ Laurence	Lebihan
 Elizabeth	Lincoln
 Hanna		Moos
 
+Augmented Code: 
+SELECT CustomerFirst, CustomerLast 
+	FROM Customers
+EXCEPT
+	SELECT FirstName, LastName 
+	FROM Employees
+ORDER BY CustomerFirst;
+
+I augmented this code by changing the Order By clause to order by the CustomerFirst column instead of the CustomerLast 
+column, which now orders the result set alphabetically by the customers first name instead of last name.
+
+Augmented Sample Output:
+CustomerFirst	CustomerLast
+Ana		Trujillo
+Antonio		Moreno
+Art		Braunschweiger
+Christina	Berglund
+Donna		Chelan
+Elizabeth	Lincoln
+Fran		Wilson
+Fred		Citeaux
+Hanna		Moos
+Helvetius	Nagy
 
 ____________________________________________________________________________________________________________________________
 
@@ -250,6 +275,8 @@ Select CustomerFirst, CustomerLast
 	From Customers inner join  Employees
 	ON Customers.CustomerFirst=Employees.FirstName
 	AND Customers.CustomerLast=Employees.LastName;
+	
+inspured by Murach as it said that an intersect could be written as an inner join
 	
 I changed the program by writing an query with an inner join joining the Customers and Employees tables
 that gets the same result as the original query.I used the search condition 
