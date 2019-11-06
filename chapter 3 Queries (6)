@@ -209,8 +209,117 @@ VendorID	InvoiceTotal
 
 _________________________________________________________________________________________________________________________________
 
+SQL Query from Murach's SQL Server 2016 for Developers page 117 figure 3-16 a
+
+--This query demonstrates a column that is defined by concatenating it with other columns
+
+SELECT VendorName,
+    VendorCity + ', ' + VendorState + ' ' + VendorZipCode AS Address
+FROM Vendors
+ORDER BY VendorName;
+
+This query the column VendorName and the column Address which is derived from the columns VendorCity, Vendor State, and 
+VendorZipCode which put otgether with a comma in between the first two columns and a space between the seconf and third columns
+make up the address and thus the column named Address. This is all from the Vendors table and then the result set is ordered
+in ascending order by the VendorName column. 
+
+Sample Output: first ten rows
+VendorName			Address
+Abbey Office Furnishings	Fresno, CA 93722
+American Booksellers Assoc	Tarrytown, NY 10591
+American Express		Los Angeles, CA 90096
+ASC Signs			Fresno, CA 93703
+Ascom Hasler Mailing Systems	Shelton, CT 06484
+AT&T				Phoenix, AZ 85062
+Aztek Label			Anaheim, CA 92807
+Baker & Taylor Books		Charlotte, NC 28217
+Bertelsmann Industry Svcs. Inc	Valencia, CA 91355
+BFI Industries			Fresno, CA 93792
+
+Augmented:
+SELECT VendorName,
+    VendorCity + ', ' + VendorState + ' ' + VendorZipCode AS Address,
+	VendorContactFName + ' ' + VendorContactLName AS ContactPerson
+FROM Vendors
+ORDER BY VendorName;
+
+I augmented this code by concetenating other columns as well to come up with a new column ContactPerson which 
+concetenated the VendorContactFName with the VendorContactLName with a space in between representing the space 
+between a contact person's first and last name to together form the ContactPerson. This way we see the Vendors, their
+address, and now have a way to contact them. 
+
+------Augmented Sample Output: First ten rows 
+VendorName	Address	ContactPerson
+Abbey Office Furnishings	Fresno, CA 93722	Kyra Francis
+American Booksellers Assoc	Tarrytown, NY 10591	Nashalie Angelica
+American Express	Los Angeles, CA 90096	Kirsten Story
+ASC Signs	Fresno, CA 93703	Elisabeth Darien
+Ascom Hasler Mailing Systems	Shelton, CT 06484	Darnell Lewis
+AT&T	Phoenix, AZ 85062	Alisha Wesley
+Aztek Label	Anaheim, CA 92807	Brian Griffin
+Baker & Taylor Books	Charlotte, NC 28217	Brittnee Bernardo
+Bertelsmann Industry Svcs. Inc	Valencia, CA 91355	Lance Potter
+BFI Industries	Fresno, CA 93792	Erick Kaleigh
 
 
+____________________________________________________________________________________________________________________________
+
+SQL Query from Murach's SQL Server 2016 for Developers page 121 figure 3-18 b
+
+--This query shows the OFFSET and FETCH NEXT clauses and how you can skip rows and then select how many to retrieve afterwards
+
+Source Code:
+SELECT VendorName, VendorCity, VendorState, VendorZipCode
+FROM Vendors
+WHERE VendorState = 'CA'
+ORDER BY VendorCity
+    OFFSET 10 ROWS	
+    FETCH NEXT 10 ROWS ONLY;
+    
+    This query selects the VendorName, VendorCity, VendorState, and VendorZipCode columns from the Vendors table if the VendorState
+    column has a field of 'CA' and then the query orders the result set by the VendorCity. Then it will OFFSET 10 rows meaning it 
+    will skip the first ten rows of the query. Finally it says it will FETCH NEXT 10 ROWS ONLY meaning it will only have the next
+    ten rows that come after skipping the first ten rows in the final result set. 
+    
+------Sample Output: 
+    VendorName	VendorCity	VendorState	VendorZipCode
+Robbins Mobile Lock And Key	Fresno	CA	93726
+BFI Industries			Fresno	CA	93792
+California Data Marketing	Fresno	CA	93721
+Yale Industrial Trucks-Fresno	Fresno	CA	93706
+Costco				Fresno	CA	93711
+Graylift			Fresno	CA	93745
+Shields Design			Fresno	CA	93728
+Fresno County Tax Collector	Fresno	CA	93715
+Gary McKeighan Insurance	Fresno	CA	93711
+Ph Photographic Services	Fresno	CA	93726
+    
+    Augmented :  
+    SELECT VendorName, VendorCity, VendorState, VendorZipCode
+FROM Vendors
+WHERE VendorState = 'CA'
+ORDER BY VendorCity
+    OFFSET 0 ROWS	
+    FETCH NEXT 10 ROWS ONLY;
+
+I changed this by so that the result set dosent skip the first ten rows and insted chooses just the first ten rows.
+The original query had an OFFSET 10 ROWS which meant it skipped the first ten rows, but mine has an OFFSET of 0, so 
+the query does not skip any rows
+
+------Augmented Sample Output:
+ VendorName	VendorCity	VendorState	VendorZipCode
+Blue Shield of California	Anaheim	CA	92850
+Aztek Label			Anaheim	CA	92807
+Diversified Printing & Pub	Brea	CA	92621
+ASC Signs			Fresno	CA	93703
+Expedata Inc			Fresno	CA	93726
+City Of Fresno			Fresno	CA	93718
+Bill Marvin Electric Inc	Fresno	CA	93703
+Robbins Mobile Lock And Key	Fresno	CA	93726
+BFI Industries			Fresno	CA	93792
+Internal Revenue Service	Fresno	CA	93888   
+
+_______________________________________________________________________________________________________________________________
 
 
 
