@@ -1,0 +1,121 @@
+SQL Query from Murach's SQL Server for Developers 2016 figure 5-1 page 161
+--This query displays the use of the COUNT function and the SUM function to add up invoices with a balnce due and the total due
+
+SELECT COUNT(*) AS NumberOfInvoices,
+  SUM(InvoiceTotal-PaymentTotal-CreditTotal) AS TotalDue
+FROM Invoices
+WHERE InvoiceTotal-PaymentTotal-CreditTotal >0;
+
+--This query counts up how many invoices there are using the COUNT(*) funtion, only selecting rows with invoices
+that have a balance due as specified in the WHERE clause, and displaying it in the column named with an alias NumberofInvoices.
+Then it sums up all the balances due for invoices with a balance due and then displays that in the column with an alias Total Due.
+This is all form the Invoices table.
+
+----------Sample Output:
+NumberOfInvoices	TotalDue
+11	              32020.42
+
+Augmented code:
+Select COUNT(*) AS PaidInvoices 
+from Invoices
+where InvoiceTotal-PaymentTotal-CreditTotal = 0;
+
+For changes I took off the summing of the balances and instead of counting up invoices with a balnce due, I counted 
+up invoices where the Balance due is zero by making the where clause InvoiceTotal-PaymentTotal-CreditTotal = 0 not >0. 
+I also change the column name giving it a different alias, namingit PaidInvoices to be more informative.
+
+-----Augmented Sample Output: all rows
+PaidInvoices
+  103
+____________________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server for Developers 2016 figure 5-2 page 163 a
+
+--This query demonstrates the use of the count, avg, and sum function with a where clause, with all the info. representive for invoices 
+--after September 1st 2015
+
+SELECT 'After 9/1/2015' AS SelectionDate, COUNT(*) AS NumberOfInvoices,
+    AVG(InvoiceTotal) AS AverageInvoiceAmount,
+    SUM(InvoiceTotal) AS TotalInvoiceAmount
+FROM Invoices
+WHERE InvoiceDate > '2015-09-01';
+
+This query will select all the rows that have an invoice date after September 1st 2015 and count up all the rows and name
+the column containing that count with a column alias named NumberofInvoices. It also names a column with a column alias 
+called SelectionDate putting the field "After 9/1/2015" in it to show that the results are for invoices after Septermber 1st 2015, 
+which is also specified in the where clause. Furthermore, the result set shows the average invoice amount for invoices after 
+Septermber 1st 2015 using the AVG function averaging the InvoiceTotal column and naming it the AverageInvoiceAmount column. 
+Lastly, it sums up all the invoices' amount for invoices after Septmember 1st 2015 using the SUM function and puts the result 
+in the column named TotalInvoiceAmount using an alias. This is all from the Invoices table. 
+
+----------Sample Output: all rows
+SelectionDate	  NumberOfInvoices	AverageInvoiceAmount	TotalInvoiceAmount
+After 9/1/2015	    114	                1879.7413           	214290.51
+
+----Augmented Code:
+SELECT 'After 3/1/2016' AS SelectionDate, COUNT(*) AS NumberOfInvoices,
+    AVG(InvoiceTotal) AS AverageInvoiceAmount,
+    SUM(InvoiceTotal) AS TotalInvoiceAmount	
+FROM Invoices
+WHERE InvoiceDate > '2016-3-01';
+
+The changes I made were changing the selection date to March 1st 2016 instead of Septmember 1st 2015 so now all the fields in the 
+reuslt set such as the average invoice amount, the total invoice amount, and the number of invoices are all for invoices after 
+March 1st 2016.
+
+-----Augmented Sample Output:
+SelectionDate	    NumberOfInvoices	AverageInvoiceAmount	TotalInvoiceAmount
+After 3/1/2016	          34	            2739.102	            93129.47
+
+_____________________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server for Developers 2016 figure 5-2 page 163 b
+
+--this query shows the use of the count function, and the Min and Max fucntion to find the minimum and maximum invoice total 
+
+SELECT 'After 9/1/2015' AS SelectionDate, COUNT(*) AS NumberOfInvoices,
+    MAX(InvoiceTotal) AS HighestInvoiceTotal,
+    MIN(InvoiceTotal) AS LowestInvoiceTotal
+FROM Invoices
+WHERE InvoiceDate > '2015-09-01';
+
+This query names a column with a column alias as SelectionDate and puts the field "After 9/1/2015 to how that these results apply
+to invices dated after September 1st 2015 (also shown by the where clause). The number of incoies is also selected, by the COUNT 
+function and names the column with a column alias as NumberofInvoices. Then it uses the MAX function to find the maximum of the 
+InvoiceTotal column and puts that value in a column named HighestInvoiceTotal using an alias. Similarily, the MIN function is 
+used to find the minimum of the InvoiceTotal column and it puts that value in a column named with a alias, naming it LowestInvoiceTotal.
+This is all form the Invoices table.
+
+---------Sample Output: all rows
+SelectionDate 	NumberOfInvoices	HighestInvoiceTotal	LowestInvoiceTotal
+After 9/1/2015	      114	                37966.19	          6.00
+
+Augmented Code:
+
+
+Augmented Sample Output:
+_____________________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server for Developers 2016 figure 5-2 page 163 c
+
+SELECT MIN(VendorName) AS FirstVendor,
+    MAX(VendorName) AS LastVendor,
+    COUNT(VendorName) AS NumberOfVendors
+FROM Vendors;
+
+
+--------Sample output:
+FirstVendor	                LastVendor	      NumberOfVendors
+Abbey Office Furnishings	Zylka Design	          122
+
+_____________________________________________________________________________________________________________________________________
+
+SQL Query from Murach's SQL Server for Developers 2016 figure 5-3 page 165 a
+
+----Sample Output:
+____________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server for Developers 2016 figure 5-2 page 163 c
+___________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server for Developers 2016 figure 5-2 page 163 c
+
+_________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server for Developers 2016 figure 5-2 page 163 c
+
+________________________________________________________________________________________________________________________________
