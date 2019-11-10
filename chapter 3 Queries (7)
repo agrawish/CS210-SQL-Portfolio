@@ -1,4 +1,4 @@
-SQl Query from Murach's SQL Server 2016 for Developers page 89 figure 3-2 #4
+SQL Query from Murach's SQL Server 2016 for Developers page 89 figure 3-2 #4
 
 --This query demonstrates the use of the Between operator to retrieve data for invoices between two specific dates
 
@@ -322,6 +322,45 @@ BFI Industries			Fresno	CA	93792
 Internal Revenue Service	Fresno	CA	93888   
 
 _______________________________________________________________________________________________________________________________
+Query from Murach's SQL Server 2016 for Developers page 119 figure 3-17 c
 
+--This query shows how you can order columns by the position they take when selecting the columns instead of by their name
 
+SELECT VendorName,
+    VendorCity + ', ' + VendorState + ' ' + VendorZipCode AS Address
+FROM Vendors
+ORDER BY 2, 1;
+
+This query shows a different way of ordering the result set, with the position of the columns instead of their names. Here the query
+selects the column VendorName from the Vendors table, and then concatenated the columns VendorCity, VendorState, and VendorZipCode 
+to give it the column alias Address. The data is ordered by 2,1 which means the second column first
+(which here is the Address column, which was selected second ), and is then ordered by 1 (which means the first column selected, which 
+here was the VendorName column). This is not a prefered method: not only is it harder to read, but it also depends on the order 
+of the columns selected, so if those change, then your order by clause changes, making it harder to update the queries if needed.
+
+Augmented:
+SELECT VendorCity + ', ' + VendorState + ' ' + VendorZipCode AS Address,
+VendorName
+FROM Vendors
+ORDER BY 2, 1;
+
+This query was changed by changing the order of the columns selected, selecting the column named with an alias Address and then
+selecting VendorName, but not changing the order by clause showing how if I change the order of the columns selected, it impacts the
+query unless I change the Order by clause to 1,2. This shows how it is not optimal to order the columns this way, and 
+instead to do it by the names, that way it won't matter if I change the column order when selecting the columns.
+
+------Augmented Sample Output:
+Address				VendorName
+Fresno, CA 93722	Abbey Office Furnishings
+Tarrytown, NY 10591	American Booksellers Assoc
+Los Angeles, CA 90096	American Express
+Fresno, CA 93703	ASC Signs
+Shelton, CT 06484	Ascom Hasler Mailing Systems
+Phoenix, AZ 85062	AT&T
+Anaheim, CA 92807	Aztek Label
+Charlotte, NC 28217	Baker & Taylor Books
+Valencia, CA 91355	Bertelsmann Industry Svcs. Inc
+Fresno, CA 93792	BFI Industries
+
+____________________________________________________________________________________________________________________________________
 
