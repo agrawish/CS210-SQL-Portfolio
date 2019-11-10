@@ -99,6 +99,8 @@ FROM InvoiceLineItems AS LineItems JOIN GLAccounts AS GLA
 	AND (LineItems.InvoiceLineItemAmount > 1000)
 ORDER BY LineItems.InvoiceID;
 
+part of this code (the fourth line) comes from a part of the code on page 137
+
 */For my changes I chose to do the join changing which tables I join and changing the conditions. Seelcting
 the InvoiceID and LineItemAmount columns from the LineItems table and the AccountDescription column form the GLA table
 I joined the InvoiceLineItems with the GLACcounts table, (which was given the alias GLA) instead of joining the Invoices table
@@ -290,3 +292,111 @@ CustomerFirst	CustomerLast
 Thomas		Hardy
 	
 __________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server 2016 for Developers page 141 Figure 4-8 a
+
+--This query shows how a left join selects all the rows from the first table and then combines them with any rows that match from the 
+--second table
+
+SELECT VendorName, InvoiceNumber, InvoiceTotal
+FROM Vendors LEFT JOIN Invoices
+    ON Vendors.VendorID = Invoices.VendorID
+ORDER BY VendorName;
+
+
+-------Sample Output
+VendorName				InvoiceNumber	InvoiceTotal
+Abbey Office Furnishings		203339-13	17.50
+American Booksellers Assoc		NULL		NULL
+American Express			NULL		NULL
+ASC Signs				NULL		NULL
+Ascom Hasler Mailing Systems		NULL		NULL
+AT&T					NULL		NULL
+Aztek Label				NULL		NULL
+Baker & Taylor Books			NULL		NULL
+Bertelsmann Industry Svcs. Inc		509786		6940.25
+BFI Industries				NULL		NULL
+
+/*This query shows how to use a left join to join the Vendors and Invoices table based on the VendorID. Basically, 
+the VendorName column is selected from the Vendors table, and all its fields will be selected. Then the InvoiceNumber and InvoiceTotal
+columns from the Invoices table are selected and matched based on their VendorID, which if it matches in both tables, then it lines
+up the InvoiceNumber and InvoiceTotal to the VendorName. But if the VendorName dosen't have a corresponding VendorID, then the fields
+in the other two columns are left as NULL.
+
+Augmented:
+SELECT VendorName, TermsDescription, TermsDueDays, TermsID, DefaultTermsID
+FROM Vendors LEFT JOIN Terms
+    ON Vendors.DefaultTermsID = Terms.TermsID
+ORDER BY VendorName;
+
+I chnaged this query by changing the tables I join and their subsequent join condition and columns. I decided to do a left outer
+join with the Vendors and Terms table instead of the original Invoices table, joining the rows if the DefaultTermsID from
+the Vendors table matched the TermsID from the Terms table, selecting the columns termsDescription and TermsDueDays column instead,
+from the Terms table. I even included the TermsID and DefaultTermsID columns just to see that the fields in the result set 
+from the two tables when joined would be the same in both columns for each row.
+
+---------Augmented Sample Output
+VendorName			TermsDescription	TermsDueDays  TermsID	DefaultTermsID
+Abbey Office Furnishings	Net due 20 days			20	2	2
+American Booksellers Assoc	Net due 30 days			30	3	3
+American Express		Net due 20 days			20	2	2
+ASC Signs			Net due 10 days			10	1	1
+Ascom Hasler Mailing Systems	Net due 30 days			30	3	3
+AT&T				Net due 30 days			30	3	3
+Aztek Label			Net due 30 days			30	3	3
+Baker & Taylor Books		Net due 30 days			30	3	3
+Bertelsmann Industry Svcs. Inc	Net due 30 days			30	3	3
+BFI Industries			Net due 30 days			30	3	3
+
+___________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server 2016 for Developers page 149 Figure 4-12 a
+--This query shows shows how to join all rows from two tables using a cross join between the Departments and Employees table
+
+SELECT Departments.DeptNo, DeptName, EmployeeID, LastName
+FROM Departments CROSS JOIN Employees
+ORDER BY Departments.DeptNo;
+
+-----Sample Output:
+DeptNo	DeptName	EmployeeID	LastName
+1	Accounting	1		Smith
+1	Accounting	2		Jones
+1	Accounting	3		Simonian
+1	Accounting	4		Hernandez
+1	Accounting	5		Aaronsen
+1	Accounting	6		Watson
+1	Accounting	7		Hardy
+1	Accounting	8		O'Leary
+1	Accounting	9		Locario
+2	Payroll		1		Smith
+
+This query shows a cross join with the Departments and the Employees table, selecting the DeptNo and DeptName columns from the
+Departments table and the EmployeeID and LastName columns from the Employees table. What's special about the cross join is 
+that ALL the rows from the Departments table are matched with ALL the rows from the Employees table. This can create really large
+result sets. This one creates 45 rows by having all 5 rows from the Departments table * all 9 rows from the Employees table.
+
+Augmented Code:
+Select InvoiceLineItems.InvoiceID, InvoiceLineItems.InvoiceLineItemAmount, InvoiceLineItems.InvoiceLineItemDescription, 
+Invoices.VendorID 
+from InvoiceLineItems
+Cross Join Invoices
+Order by Invoices.InvoiceID;
+
+To change the query I performed a cross join using different tables from a different database. I used the AP database instead 
+of the examples one and cross joined the tables InvoiceLineItems with Invoices, selecting the columns InvoiceID, InvoiceLineItemAmount,
+and InvoicelineItemDescription from the InvoicelineItems table and selected the VendorID from the Invoices table. I then ordered 
+the result set by the InvoiceID of the Invoies table. This shows how large cross joins can get because this one 
+has OVER 13,000 rows in the result set. 
+
+-------Augmented Sample Output:
+InvoiceID	InvoiceLineItemAmount	InvoiceLineItemDescription		VendorID
+1			3813.33			Freight				122
+2			40.20			Freight				122
+3			138.75			Freight				122
+4			144.70			Int'l shipment			122
+5			15.50			Freight				122
+6			42.75			Freight				122
+7			172.50			Freight				122
+8			95.00			Telephone service		122
+9			601.95			Cover design			122
+10			42.67			Freight				12
+
+___________________________________________________________________________________________________________________________________
