@@ -241,7 +241,8 @@ SELECT VendorName,
     VendorCity + ', ' + VendorState + ' ' + VendorZipCode AS Address,
 	VendorContactFName + ' ' + VendorContactLName AS ContactPerson
 FROM Vendors
-ORDER BY VendorName;
+ORDER BY VendorName; 
+(the added expression is from page 91)
 
 I augmented this code by concetenating other columns as well to come up with a new column ContactPerson which 
 concetenated the VendorContactFName with the VendorContactLName with a space in between representing the space 
@@ -301,6 +302,7 @@ WHERE VendorState = 'CA'
 ORDER BY VendorCity
     OFFSET 0 ROWS	
     FETCH NEXT 10 ROWS ONLY;
+    (similar to the code on this page but the first one not the second)
 
 I changed this by so that the result set dosent skip the first ten rows and insted chooses just the first ten rows.
 The original query had an OFFSET 10 ROWS which meant it skipped the first ten rows, but mine has an OFFSET of 0, so 
