@@ -82,28 +82,62 @@ to invices dated after September 1st 2015 (also shown by the where clause). The 
 function and names the column with a column alias as NumberofInvoices. Then it uses the MAX function to find the maximum of the 
 InvoiceTotal column and puts that value in a column named HighestInvoiceTotal using an alias. Similarily, the MIN function is 
 used to find the minimum of the InvoiceTotal column and it puts that value in a column named with a alias, naming it LowestInvoiceTotal.
-This is all form the Invoices table.
+This is all form the Invoices table. it's important to note that the min and max values are only for invoices after Sept. 1st 2015
 
 ---------Sample Output: all rows
 SelectionDate 	NumberOfInvoices	HighestInvoiceTotal	LowestInvoiceTotal
 After 9/1/2015	      114	                37966.19	          6.00
 
 Augmented Code:
+SELECT 'After 9/1/2015' AS SelectionDate, COUNT(*) AS NumberOfInvoices,
+    MAX(PaymentTotal) AS HighestPaymentTotal,
+    MIN(PaymentTotal) AS LowestPaymentTotal
+FROM Invoices
+WHERE InvoiceDate > '2015-09-01';
 
+-------Augmented Sample Output: all rows
+SelectionDate	  NumberOfInvoices	HighestPaymentTotal	LowestPaymentTotal
+After 9/1/2015	      114           	37966.19	            0.00
 
-Augmented Sample Output:
+To change the query I took the Max and Min of a different column: of the PaymentTotal column instead of the InvoiceTotal column. 
+I subsequently changed the column alias of the MAX to HighestPaymentTotal and changed that of the MIN to LowestPaymentTotal.
+This showed me the highest and lowest payments instead of invoicetotals with the same date criteria. 
 _____________________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-2 page 163 c
+
+--This query shows how to use the MIN and MAX fuctions columns that don't have number fields, and also uses the COUNT function
 
 SELECT MIN(VendorName) AS FirstVendor,
     MAX(VendorName) AS LastVendor,
     COUNT(VendorName) AS NumberOfVendors
 FROM Vendors;
 
+This query selects the Minimum of the VendorName column with the MIN function and gives it the column alias FirstVendor and 
+similarily selects the Maximum of the VendorName column with the MAX function and gives it the column alias LastVendor. 
+These may seem out of place becuase they take the min and max of non-numeric fields. However, they work by finding the min and max
+alphabetically, where the MIN represented the VendorName closest to A, and the MAX represents the VendorName closes to Z, since the
+alphabet goes A to Z. Also, it selects the number of fields in the VendorName column and gives that column the alias NumberofVendors.
+This is all form the Vendors table.
 
---------Sample output:
+--------Sample output: all rows
 FirstVendor	                LastVendor	      NumberOfVendors
-Abbey Office Furnishings	Zylka Design	          122
+Abbey Office Furnishings	  Zylka Design	          122
+
+Augmented:
+SELECT MIN(VendorName) AS FirstVendor,
+    MAX(VendorName) AS LastVendor,
+    COUNT(VendorName) AS NumberOfVendors
+FROM Vendors
+where VendorState <> 'CA'
+
+I changed this query by adding a where clause to specify that I want the MIN, MAX, and COUNT functions to only apply to 
+Vendors whose state is NOT CA, whereas the previous query looked at Vendors overall, with no reguards for whether the 
+vendor came from a particular state or not.
+
+Augmented Sample Output: all rows
+
+FirstVendor	                      LastVendor	              NumberOfVendors
+American Booksellers Assoc	    Zee Medical Service Co            	47
 
 _____________________________________________________________________________________________________________________________________
 
@@ -112,6 +146,7 @@ SQL Query from Murach's SQL Server for Developers 2016 figure 5-3 page 165 a
 ----Sample Output:
 ____________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-2 page 163 c
+
 ___________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-2 page 163 c
 
