@@ -60,7 +60,7 @@ Bon app' 	10340 	France 
 Bon app' 	10362 	France 
 ______________________________________________________________________________________________________________________________________
 
---Source Code: Murach's SQL Server 2016 for Developers pg 133 figure 4-4
+--Source Code: Murach's SQL Server 2016 for Developers pg 133 figure 4-4 a
 --SQL Query--This demonstrates how to join data from two tables with two join conditions and an order by clause 
 
 SELECT InvoiceNumber, InvoiceDate,
@@ -123,7 +123,7 @@ InvoiceID	AccountNo	InvoiceLineItemAmount	AccountDescription
 51	553	2184.11	Freight
 _______________________________________________________________________________________________________________________________
 
-SQL Query----from Murach's SQL Server 2016 for Developers figure 4-14 page 153
+SQL Query----from Murach's SQL Server 2016 for Developers figure 4-14 page 153 A
 
 This query joins data from the same table with a UNION clause to determined whether an invoice is paid or active
 
@@ -400,3 +400,105 @@ InvoiceID	InvoiceLineItemAmount	InvoiceLineItemDescription		VendorID
 10			42.67			Freight				12
 
 ___________________________________________________________________________________________________________________________________
+
+SQL Query from Murach's SQL Server 2016 for Developers page 127 Figure 4-1 a
+
+SELECT InvoiceNumber, VendorName
+FROM Vendors JOIN Invoices
+    ON Vendors.VendorID = Invoices.VendorID;
+
+------Sample Output:
+InvoiceNumber	VendorName
+QP58872		IBM
+Q545443		IBM
+547481328	Blue Cross
+547479217	Blue Cross
+547480102	Blue Cross
+P02-88D77S7	Fresno County Tax Collector
+40318		Data Reproductions Corp
+39104		Data Reproductions Corp
+134116		Cardinal Business Media, Inc.
+133560		Cardinal Business Media, Inc.
+
+________________________________________________________________________________________________________________________
+
+SQL Query from Murach's SQL Server 2016 for Developers page 129 Figure 4-2 a
+
+SELECT InvoiceNumber, VendorName, InvoiceDueDate,
+    InvoiceTotal - PaymentTotal - CreditTotal AS BalanceDue
+FROM Vendors AS v JOIN Invoices AS i
+    ON v.VendorID = i.VendorID
+WHERE InvoiceTotal - PaymentTotal - CreditTotal > 0
+ORDER BY InvoiceDueDate DESC;
+
+-------Sample Output: 
+InvoiceNumber	VendorName	InvoiceDueDate	BalanceDue
+0-2436	Malloy Lithographing Inc	2016-04-30 00:00:00	10976.06
+547480102	Blue Cross	2016-04-30 00:00:00	224.00
+9982771	Ford Motor Credit Company	2016-04-23 00:00:00	503.20
+P-0608	Malloy Lithographing Inc	2016-04-22 00:00:00	19351.18
+263253270	Federal Express Corporation	2016-04-21 00:00:00	67.92
+263253273	Federal Express Corporation	2016-04-21 00:00:00	30.75
+263253268	Federal Express Corporation	2016-04-20 00:00:00	59.97
+963253264	Federal Express Corporation	2016-04-17 00:00:00	52.25
+134116	Cardinal Business Media, Inc.	2016-04-17 00:00:00	90.36
+31361833	Ingram	2016-04-10 00:00:00	579.42
+
+___________________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server 2016 for Developers page 143 Figure 4-9 a
+
+SELECT DeptName, Departments.DeptNo, LastName
+FROM Departments LEFT JOIN Employees
+    ON Departments.DeptNo = Employees.DeptNo;
+    
+   ------Sample Output (all rows)
+   DeptName	DeptNo	LastName
+Accounting	1	Hernandez
+Payroll	2	Smith
+Payroll	2	Simonian
+Payroll	2	Aaronsen
+Operations	3	NULL
+Personnel	4	Jones
+Personnel	4	O'Leary
+Maintenance	5	Hardy
+
+____________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server 2016 for Developers page 149 Figure 4-9 b
+
+SELECT DeptName, Employees.DeptNo, LastName
+FROM Departments RIGHT JOIN Employees
+    ON Departments.DeptNo = Employees.DeptNo;
+
+-------Sample Output: all rows
+DeptName	DeptNo	LastName
+Payroll	2	Smith
+Personnel	4	Jones
+Payroll	2	Simonian
+Accounting	1	Hernandez
+Payroll	2	Aaronsen
+NULL	6	Watson
+Maintenance	5	Hardy
+Personnel	4	O'Leary
+NULL	6	Locario
+
+____________________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server 2016 for Developers page 149 Figure 4-9 c
+
+SELECT DeptName, Departments.DeptNo, Employees.DeptNo, LastName
+FROM Departments FULL JOIN Employees
+    ON Departments.DeptNo = Employees.DeptNo;
+
+-------Sample Output: all rows
+DeptName	DeptNo	DeptNo	LastName
+Accounting	1	1	Hernandez
+Payroll	2	2	Smith
+Payroll	2	2	Simonian
+Payroll	2	2	Aaronsen
+Operations	3	NULL	NULL
+Personnel	4	4	Jones
+Personnel	4	4	O'Leary
+Maintenance	5	5	Hardy
+NULL	NULL	6	Watson
+NULL	NULL	6	Locario
+
+________________________________________________________________________________________________________________________________
