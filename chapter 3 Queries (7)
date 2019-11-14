@@ -363,4 +363,47 @@ Valencia, CA 91355	Bertelsmann Industry Svcs. Inc
 Fresno, CA 93792	BFI Industries
 
 ____________________________________________________________________________________________________________________________________
+Query from Murach's SQL Server 2016 for Developers page 101 figure 3-8 b
+
+SELECT DISTINCT VendorCity, VendorState
+FROM Vendors;
+
+--------Sample Output:
+VendorCity		VendorState
+Anaheim			CA
+Ann Arbor		MI
+Auburn Hills		MI
+Boston			MA
+Brea			CA
+Carol Stream		IL
+Charlotte		NC
+Chicago			IL	
+Cincinnati		OH
+Cleves			OH
+
+_______________________________________________________________________________________________________________________________
+Query from Murach's SQL Server 2016 for Developers page 111 figure 3-7 a
+
+SELECT VendorContactFName, VendorContactLName,
+    LEFT(VendorContactFName, 1) +
+    LEFT(VendorContactLName, 1) AS Initials
+FROM Vendors;
+
+-----------Sample Output:
+VendorContactFName	VendorContactLName	Initials
+Francesco			Alberto		FA
+Ania				Irvin		AI
+Lukas				Liana		LL
+Kenzie				Quinn		KQ
+Michelle			Marks		MM
+Anton				Mauro		AM
+Ted				Maegen		TM
+Erick				Kaleigh		EK
+Kaitlyn				Anthoni		KA
+Bill				Leigh		BL
+
+_________________________________________________________________________________________________________________________
+
+
+
 
