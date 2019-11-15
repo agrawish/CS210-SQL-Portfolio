@@ -365,8 +365,15 @@ Fresno, CA 93792	BFI Industries
 ____________________________________________________________________________________________________________________________________
 Query from Murach's SQL Server 2016 for Developers page 101 figure 3-8 b
 
+--This query shows how the DISTINCT keyword takes out duplicate rows to show only distinct values in the result set
+
 SELECT DISTINCT VendorCity, VendorState
 FROM Vendors;
+
+This query selects the VendorCity and VendorState columns from the Vendors table. But instead of having all the different 
+cities and states repeat, because they will, it uses the DISTINCT keyword to make sure we only get the different cities.
+The cities will not repeat, however, the VendorState will because there are different cities in a state and we do not 
+sepecify selecting the distinct states.
 
 --------Sample Output:
 VendorCity		VendorState
@@ -381,13 +388,39 @@ Chicago			IL
 Cincinnati		OH
 Cleves			OH
 
+Augmented Code:
+Select DISTINCT InvoiceLineItemDescription
+from InvoiceLineItems;
+
+*To change this query I decided to show the use of the DISTINCT keyword by querying from a diffrent table: InvoiceLineItems 
+instead of Vendors, selecting the InvoicelineItemDescription column. 
+This now shows me all the different types of items that the invoices could be.  
+The output now shows 10 different types of items
+
+------Augmented Sample Output:
+InvoiceLineItemDescription
+401K Contributions
+Address correction
+Back office additions
+Book copy
+Book repro
+Books for research
+Bronco lease
+Card deck
+Card deck advertising
+Card revision
 _______________________________________________________________________________________________________________________________
 Query from Murach's SQL Server 2016 for Developers page 111 figure 3-7 a
-
+--This query demonstrates how to use the LEFT function to select the first letter of first and last names to create intitials
 SELECT VendorContactFName, VendorContactLName,
     LEFT(VendorContactFName, 1) +
     LEFT(VendorContactLName, 1) AS Initials
 FROM Vendors;
+
+This query selects the VendorContactFName and VendorContactLName columns from the Vendors table. It also uses the LEFT function
+on those two columns, specifying two parameters. The first is where the value is coming from (in this case either two columns)
+and then specifys how many charcters it will retrieve (in this case 1). Then these two LEFT functions are concatenated together to
+create a column named Initials. 
 
 -----------Sample Output:
 VendorContactFName	VendorContactLName	Initials
@@ -402,6 +435,26 @@ Erick				Kaleigh		EK
 Kaitlyn				Anthoni		KA
 Bill				Leigh		BL
 
+Augmented Code:
+SELECT FirstName, LastName,
+    LEFT(FirstName, 1) +
+    LEFT(LastName, 1) AS Initials
+FROM ContactUpdates;
+
+I augmented the code by applying the original query structure to a different table: ContactUpdates. I selected the 
+FirstName and LastName columns, applyed the LEFT fucntion to those two columns selecting the first character from each of them 
+and kept the column name the same (Initials). This then gave me the contact's full name and then their initials. 
+
+Augmented Sample Ouput: all rows
+FirstName	LastName	Initials
+Michelle	Davison		MD
+Kendall		Mayteh		KM
+Bruce		Onandonga	BO
+Anthony		Antavius	AA
+Danny		Bradlee		DB
+Reynaldo	Suscipe		RS
+Geraldine	O'Sullivan	GO
+Charles		Bucket		CB
 _________________________________________________________________________________________________________________________
 
 
