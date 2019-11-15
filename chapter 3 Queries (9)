@@ -410,7 +410,7 @@ Card deck
 Card deck advertising
 Card revision
 _______________________________________________________________________________________________________________________________
-Query from Murach's SQL Server 2016 for Developers page 111 figure 3-7 a
+Query from Murach's SQL Server 2016 for Developers page 99 figure 3-7 a
 --This query demonstrates how to use the LEFT function to select the first letter of first and last names to create intitials
 SELECT VendorContactFName, VendorContactLName,
     LEFT(VendorContactFName, 1) +
