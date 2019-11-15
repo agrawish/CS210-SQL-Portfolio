@@ -457,6 +457,7 @@ InvoiceNumber	VendorName			ContactLastName		ContactFirstName
 ________________________________________________________________________________________________________________________
 
 SQL Query from Murach's SQL Server 2016 for Developers page 129 Figure 4-2 a
+--This query demonstrates a join with a bad way to use aliases, making the query less readable
 
 SELECT InvoiceNumber, VendorName, InvoiceDueDate,
     InvoiceTotal - PaymentTotal - CreditTotal AS BalanceDue
@@ -464,6 +465,15 @@ FROM Vendors AS v JOIN Invoices AS i
     ON v.VendorID = i.VendorID
 WHERE InvoiceTotal - PaymentTotal - CreditTotal > 0
 ORDER BY InvoiceDueDate DESC;
+
+This query selects the InvoiceNumber and InvoiceDueDate column from the Invoices table and the VendorName column form the Vendors
+table. It also selects a column with a correlation name BalanceDue which is calculated as 
+the columns InvoiceTotal -PaymentTotal-CreditTotal. It joins the Vendors table (giving it the alias v) and the Invoices table 
+(giving it the alias i), selecting those rows where the VendorID is the same in both. Then another filter is applied in the where 
+clause. Only those rows will be in the reuslt set whose values have a balanceDue above zero. Notice how the query uses v and i as the 
+alias. Those are not helpful because they are not intuitive logical correlation names and do not mean much. This actually 
+just makes the query more complicated, so these should be avoided and either replaced with something more intuitive or 
+just left out all together. In the end, this query orders the results descending by the InvoiceDueDate.
 
 -------Sample Output: 
 InvoiceNumber	VendorName	InvoiceDueDate	BalanceDue
@@ -478,6 +488,30 @@ P-0608	Malloy Lithographing Inc	2016-04-22 00:00:00	19351.18
 134116	Cardinal Business Media, Inc.	2016-04-17 00:00:00	90.36
 31361833	Ingram	2016-04-10 00:00:00	579.42
 
+Augmented Code:
+SELECT InvoiceNumber, VendorName, InvoiceDueDate, InvoiceTotal
+FROM Vendors AS v JOIN Invoices AS i
+    ON v.VendorID = i.VendorID
+WHERE InvoiceTotal > 500
+ORDER BY InvoiceDueDate DESC;
+
+I changed this query by removing the calculated column BalanceDue and thus removing the where clause saying 
+to include only those rows with a BalanceDue above zero, and instead I replaced it with the InvoiceTotal. So I selected the
+InvoiceTotal column from the Invoices table and then in the WHERE clause I stated to get rows with an InvoiceTotal > 500.
+
+
+---------Augmented Sample Output:
+InvoiceNumber	VendorName	InvoiceDueDate	InvoiceTotal
+0-2436	Malloy Lithographing Inc	2016-04-30 00:00:00	10976.06
+97/222	Zylka Design	2016-04-24 00:00:00	1000.46
+9982771	Ford Motor Credit Company	2016-04-23 00:00:00	503.20
+0-2060	Malloy Lithographing Inc	2016-04-23 00:00:00	23517.58
+989319-447	United Parcel Service	2016-04-23 00:00:00	3689.99
+P-0608	Malloy Lithographing Inc	2016-04-22 00:00:00	20551.18
+989319-417	United Parcel Service	2016-04-22 00:00:00	2051.59
+P-0259	Malloy Lithographing Inc	2016-04-18 00:00:00	26881.40
+31361833	Ingram	2016-04-10 00:00:00	579.42
+587056	Cahners Publishing Company	2016-04-09 00:00:00	2184.50
 ___________________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server 2016 for Developers page 143 Figure 4-9 a
 
