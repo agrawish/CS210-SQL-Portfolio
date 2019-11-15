@@ -515,10 +515,13 @@ P-0259	Malloy Lithographing Inc	2016-04-18 00:00:00	26881.40
 ___________________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server 2016 for Developers page 143 Figure 4-9 a
 
+--This query demonstrates a left join between two tables with one join condition
+
 SELECT DeptName, Departments.DeptNo, LastName
 FROM Departments LEFT JOIN Employees
     ON Departments.DeptNo = Employees.DeptNo;
     
+ 
    ------Sample Output (all rows)
    DeptName	DeptNo	LastName
 Accounting	1	Hernandez
