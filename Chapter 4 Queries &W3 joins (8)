@@ -402,10 +402,17 @@ InvoiceID	InvoiceLineItemAmount	InvoiceLineItemDescription		VendorID
 ___________________________________________________________________________________________________________________________________
 
 SQL Query from Murach's SQL Server 2016 for Developers page 127 Figure 4-1 a
+--This query shows an inner join witha join condition based on having the same VendorID in both the tables
 
 SELECT InvoiceNumber, VendorName
 FROM Vendors JOIN Invoices
     ON Vendors.VendorID = Invoices.VendorID;
+
+This query selects the InvoiceNumber column from the Invoices table and the VendorName column from the Vendors table
+and joins from the two tables based on the VendorID. If the VendorID from the Vendors table is the same as the VendorID 
+(hence the equals sign)
+from the Invoices table then those rows are retrieved. The join condition is shown by the ON clause
+--Note the keyword JOIN means the same as saying INNER JOIN but the keyword INNER is "seldom used" (page 127)	
 
 ------Sample Output:
 InvoiceNumber	VendorName
@@ -420,6 +427,33 @@ P02-88D77S7	Fresno County Tax Collector
 134116		Cardinal Business Media, Inc.
 133560		Cardinal Business Media, Inc.
 
+Augmented:
+
+SELECT InvoiceNumber, VendorName, LastName AS ContactLastName, FirstName AS ContactFirstName
+FROM Vendors JOIN Invoices
+    ON Vendors.VendorID = Invoices.VendorID
+	JOIN ContactUpdates
+	ON Invoices.VendorID=ContactUpdates.VendorID;
+	
+I augmented this code by adding another inner join, joining the Vendors and Invoices table with the ContactUpates table.
+I used the same join condition, so it only includes rows if the VendorID of the Invoices is the same as the VendorID 
+from the ContactUpdates table. This means the three tables are joined only if the VendorID for the three tables is the same
+for ALL three tables. I also selected the LastName column from the ContactUpdates table and gave it an alias ContactLastName
+and I selected the FirstName column from the ContactUpdates table and gave it the alias ContactFirstName to see who the invoice's
+contact was. This chnage just shows how you can apply the same join structure to join more than two tables. 
+
+-------Augmented Sample Output:
+InvoiceNumber	VendorName			ContactLastName		ContactFirstName
+203339-13	Abbey Office Furnishings	Suscipe			Reynaldo
+263253241	Federal Express Corporation	Bucket			Charles
+963253234	Federal Express Corporation	Bucket			Charles
+2-000-2993	Federal Express Corporation	Bucket			Charles
+963253251	Federal Express Corporation	Bucket			Charles
+963253261	Federal Express Corporation	Bucket			Charles
+963253237	Federal Express Corporation	Bucket			Charles
+263253250	Federal Express Corporation	Bucket			Charles
+963253262	Federal Express Corporation	Bucket			Charles
+4-321-2596	Federal Express Corporation	Bucket			Charles
 ________________________________________________________________________________________________________________________
 
 SQL Query from Murach's SQL Server 2016 for Developers page 129 Figure 4-2 a
