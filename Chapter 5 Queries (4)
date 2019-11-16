@@ -150,16 +150,16 @@ GROUP BY VendorID;
 
 --------Sample Output:
 VendorID	InvoiceQty
-34	2
-37	3
-48	1
-72	2
-80	2
-81	1
-82	1
-83	2
-86	1
-88	1
+34          	2
+37	          3
+48	          1
+72	          2
+80	          2
+81	          1
+82	          1
+83	          2
+86	          1
+88	          1
 
 ----Augmented Sample Output:
 ____________________________________________________________________________________________________________________________
@@ -198,16 +198,16 @@ ORDER BY VendorState, VendorCity;
 
 ------Sample Output:
 VendorCity	InvoiceQty	InvoiceAvg
-AZ	Phoenix	1	662.00
-CA	Fresno	19	1208.7457
-CA	Los Angeles	1	503.20
-CA	Oxnard	3	188.00
-CA	Pasadena	5	196.12
-CA	Sacramento	7	253.0014
-CA	San Francisco	3	1211.04
-CA	Turlock	1	95.00
-CA	Valencia	1	6940.25
-DC	Washington	1	600.00
+AZ	Phoenix	    1	            662.00
+CA	Fresno	    19	          1208.7457
+CA	Los Angeles	1	        503.20
+CA	Oxnard	    3	            188.00
+CA	Pasadena	  5	          196.12
+CA	Sacramento	7	        253.0014
+CA	San Francisco	3	      1211.04
+CA	Turlock	    1	            95.00
+CA	Valencia	  1	          6940.25
+DC	Washington	1	        600.00
 
 _________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-4 page 167 c
