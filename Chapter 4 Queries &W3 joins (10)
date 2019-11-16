@@ -521,6 +521,12 @@ SELECT DeptName, Departments.DeptNo, LastName
 FROM Departments LEFT JOIN Employees
     ON Departments.DeptNo = Employees.DeptNo;
     
+ This query selects the DeptName column and the DeptNo column from the Departments table, which is joined with the 
+ Employees table, form which the LastName column is retrieved. The join condition is that rows are only selected if 
+ the Dept.No column's values match for both tables. Since this is a left join, all the DeptName rows and DeptNo rows from the 
+ "left" table (the first table, in thus case Departments) is selected and then is matched up with the rows from the second
+ table (in this case Employees), matching up the LastName's values to those two columns' values. Thus, if there is no last name
+ that falls in thar department selected, then it will appear to be NULL.
  
    ------Sample Output (all rows)
    DeptName	DeptNo	LastName
@@ -533,6 +539,27 @@ Personnel	4	Jones
 Personnel	4	O'Leary
 Maintenance	5	Hardy
 
+Augmented:
+SELECT DeptName, Departments.DeptNo, LastName, Employees.EmployeeID
+FROM Departments LEFT JOIN Employees
+    ON Departments.DeptNo = Employees.DeptNo;
+   
+   I changed this query by adding in another column to retrieve: the Employee ID from the Employees table. This would now 
+   also join that column to the values from the columns selected from the first table. Now we can see the corresponding 
+   EmployeeID for each employee of each department and their last name. 
+   
+   *And since their is no Employee for the Operations department, the employeeID and lastName fields are NULL
+   
+   -------Augmented Sample Output: all rows
+   DeptName	DeptNo	LastName	EmployeeID
+Accounting	1	Hernandez	4
+Payroll		2	Smith		1
+Payroll		2	Simonian	3
+Payroll		2	Aaronsen	5
+Operations	3	NULL		NULL
+Personnel	4	Jones		2
+Personnel	4	O'Leary		8
+Maintenance	5	Hardy		7
 ____________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server 2016 for Developers page 149 Figure 4-9 b
 
