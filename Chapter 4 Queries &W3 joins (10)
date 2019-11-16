@@ -562,22 +562,51 @@ Personnel	4	O'Leary		8
 Maintenance	5	Hardy		7
 ____________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server 2016 for Developers page 149 Figure 4-9 b
+--This query shows a right join with one join condition to join the Departments and Employees table
 
 SELECT DeptName, Employees.DeptNo, LastName
 FROM Departments RIGHT JOIN Employees
     ON Departments.DeptNo = Employees.DeptNo;
+    
+This query selects the DeptName column from the Departments  table and the DeptNo and LastName columns from the Employees table.
+These two tables are joined with a right join if the DeptNo column's values are the same in both tables. Since it's a RIGHT JOIN
+then everything I selected form the right table (the Employees table) will be selected, and then will be matched to what I selected
+from the Departments table. 
+
+Since Watson and Locario belong to Department 6 and deparmtent 6 dosen't exist in the Departments table, 
+the DeptName is NULL, for those rows where the DeptNo value is 6
+
 
 -------Sample Output: all rows
 DeptName	DeptNo	LastName
-Payroll	2	Smith
+Payroll		2	Smith
 Personnel	4	Jones
-Payroll	2	Simonian
+Payroll		2	Simonian
 Accounting	1	Hernandez
-Payroll	2	Aaronsen
-NULL	6	Watson
+Payroll		2	Aaronsen
+NULL		6	Watson
 Maintenance	5	Hardy
 Personnel	4	O'Leary
-NULL	6	Locario
+NULL		6	Locario
+
+Augmented:
+
+SELECT DeptName, Employees.DeptNo, LastName, Employees.ManagerID
+FROM Departments RIGHT JOIN Employees
+    ON Departments.DeptNo = Employees.DeptNo;
+
+
+-----Augmented Sample Output:
+DeptName	DeptNo	LastName	ManagerID
+Payroll		2	Smith		NULL
+Personnel	4	Jones		1
+Payroll		2	Simonian	2
+Accounting	1	Hernandez	2
+Payroll		2	Aaronsen	3
+NULL		6	Watson		3
+Maintenance	5	Hardy		2
+Personnel	4	O'Leary		2
+NULL		6	Locario		1
 
 ____________________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server 2016 for Developers page 149 Figure 4-9 c
