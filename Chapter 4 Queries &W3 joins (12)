@@ -594,7 +594,9 @@ Augmented:
 SELECT DeptName, Employees.DeptNo, LastName, Employees.ManagerID
 FROM Departments RIGHT JOIN Employees
     ON Departments.DeptNo = Employees.DeptNo;
-
+    
+To change the code I added in selecting the column ManagerID from the Employees table so now all the Manager ID's are 
+selected and matched up with the corresponding DeptName and Dept.No 
 
 -----Augmented Sample Output:
 DeptName	DeptNo	LastName	ManagerID
@@ -610,22 +612,52 @@ NULL		6	Locario		1
 
 ____________________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server 2016 for Developers page 149 Figure 4-9 c
+--This query demonstrates a full outer join between the Departments and Employees table
 
 SELECT DeptName, Departments.DeptNo, Employees.DeptNo, LastName
 FROM Departments FULL JOIN Employees
     ON Departments.DeptNo = Employees.DeptNo;
 
+The query does a full outer join with the Departments and Employees table, selecting the DeptName and DeptNo columns 
+from the Departments table and selecting the LastName and DeptNo columns from the Employees table. Rows in the result set will
+include those where the DeptNo matches in both tables and rows from the Departments and Employees table that did not have 
+a match.
+
 -------Sample Output: all rows
 DeptName	DeptNo	DeptNo	LastName
 Accounting	1	1	Hernandez
-Payroll	2	2	Smith
-Payroll	2	2	Simonian
-Payroll	2	2	Aaronsen
+Payroll		2	2	Smith
+Payroll		2	2	Simonian
+Payroll		2	2	Aaronsen
 Operations	3	NULL	NULL
 Personnel	4	4	Jones
 Personnel	4	4	O'Leary
 Maintenance	5	5	Hardy
-NULL	NULL	6	Watson
-NULL	NULL	6	Locario
+NULL		NULL	6	Watson
+NULL		NULL	6	Locario
+
+Augmented:
+Use ProductOrders
+	Select Items.Artist, Items.UnitPrice,OrderDetails.OrderID, OrderDetails.Quantity
+	from Items Full Join OrderDetails
+	on Items.ItemID = OrderDetails.ItemID;
+	
+To change the code, I did a full outer join with the Items and OrderDetails tables from the ProductOrders database. 
+I selected the the Artist and UnitPrice columns from the Items table and the OrderID and Quantity columns from the OrderDetails
+table, joining the two tables based on the ItemID. If the ItemID matches in both tables, those rows are included, as well as 
+those rows that did not have the ItemID match.
+
+-----Augmented Sample Output:
+Artist	UnitPrice	OrderID	Quantity
+Umami	17.95		381	1
+Umami	17.95		442	1
+Umami	17.95		778	1
+Umami	17.95		118	1
+Umami	17.95		658	1
+Umami	17.95		479	2
+Umami	17.95		800	1
+Umami	17.95		70	1
+Umami	17.95		829	1
+Umami	17.95		242	1
 
 ________________________________________________________________________________________________________________________________
