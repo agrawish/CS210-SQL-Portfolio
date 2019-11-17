@@ -142,11 +142,16 @@ American Booksellers Assoc	    Zee Medical Service Co            	47
 _____________________________________________________________________________________________________________________________________
 
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-4 page 167 a
---This query 
+--This query shows hwo to use the Group by clause and the Count function to determine the number of invoices per vendorID
 
 SELECT VendorID, COUNT(*) AS InvoiceQty
 FROM Invoices
 GROUP BY VendorID;
+
+Here the query selects the VendorID column and InvoiceQty column (which is derived from the Count fucntion)
+from the Invoices table. The results are grouped by the
+VendorID and since there is a Count function , the query determines (counts) how many invoices each vendorID has. For instance, 
+vendorID number 34 has 2 invoices while number 37 has 3 invoices. 
 
 --------Sample Output:
 VendorID	InvoiceQty
@@ -161,16 +166,43 @@ VendorID	InvoiceQty
 86	          1
 88	          1
 
+Augmented:
+SELECT InvoiceLineItems.AccountNo, COUNT(*) AS Quantity
+FROM InvoiceLineItems
+GROUP BY AccountNo;
+
+I augmented this code by basically following the same structure but perfoming it for a different table: the InvocieLineItems
+table. This would select the AccountNo column and use the Count(*) function to create the column named Quantity which would count
+up the number of times a specific account number appears in the table. Then the group by clause would group the data by the AccountNo
+so that the result set counts up how many Invoices per AccountNo.
+
 ----Augmented Sample Output:
+AccountNo	Quantity
+150       	1
+160       	3
+170       	1
+400       	8
+403	        8
+507       	1
+510	        3
+520	        1
+521	        1
+522	        7
 ____________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-3 page 165 a
---This query
+--This query finds the average invoice amount for each VendorID if the Avgerage invoice amount is over 2000
 
 SELECT VendorID, AVG(InvoiceTotal) AS AverageInvoiceAmount
 FROM Invoices
 GROUP BY VendorID
 HAVING AVG(InvoiceTotal) > 2000
 ORDER BY AverageInvoiceAmount DESC;
+
+Thsi query selects the VendorID column and caluclates the average of the InvoiceTotal column (naming the column AverageInvoiceAmount)
+all from the Invoices table. The results are grouped by VendorID so the average is calculated for each vendorID, taking all the
+invoice amounts for one particular vendorID and finding their average. Then that is filtered by the HAVING clause so that only
+those results are included that have an average invoice amount over 2000. Lastly, the result set is ordered with the average 
+invoice amount highest to lowest.
 
 ------Sample Output:
 VendorID	AverageInvoiceAmount
@@ -184,7 +216,21 @@ VendorID	AverageInvoiceAmount
     100   	2184.50
     
     Augmented:
-    
+    SELECT VendorID, AVG(InvoiceTotal) AS AverageInvoiceAmount
+FROM Invoices
+GROUP BY VendorID
+HAVING AVG(InvoiceTotal) > 5000
+ORDER BY AverageInvoiceAmount DESC;
+
+To change this query I just changed the HAVING clause to HAVING AVG(InvoiceTotal) > 5000 instead of 2000, so now only those reuslts
+are included where the average invoice amount is over 5000, not 2000. 
+
+-----Augmented Sample Output:
+VendorID	AverageInvoiceAmount
+110	    23978.482
+72	    10963.655
+104   	7125.34
+99	    6940.25
 ___________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-4 page 167 b
 --This query
