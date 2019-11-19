@@ -233,7 +233,7 @@ VendorID	AverageInvoiceAmount
 99	    6940.25
 ___________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-4 page 167 b
---This query shows how to use the Group By clause to find the number of invoices and average invoice amount per city
+--This query shows how to use the Group By clause to find the number of invoices and average invoice amount per city and joins 2 tables
 
 SELECT VendorState, VendorCity, COUNT(*) AS InvoiceQty,
     AVG(InvoiceTotal) AS InvoiceAvg
@@ -292,7 +292,7 @@ TX            	  2	      1077.21
 _________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-4 page 167 c
 --This query uses the Count and Avg fucntion and the group by clause to determine the number of invoices and the invoice average 
-only for those vendor city/state with at least 2 invoices
+only for those vendor city/state with at least 2 invoices after joining two tables
 
 SELECT VendorState, VendorCity, COUNT(*) AS InvoiceQty,
     AVG(InvoiceTotal) AS InvoiceAvg
@@ -346,3 +346,95 @@ MI	Ann Arbor	5	23978.482
 NV	Reno	9	2575.3288
 TN	Memphis	47	93.1493
 ________________________________________________________________________________________________________________________________
+SQL Query from W3Schools : https://www.w3schools.com/sql/sql_groupby.asp
+--This query selects the number of customers per country, using the Count and Group by clause to do so
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country;
+
+This query selects the Country column from the Customers table, and uses the Count function on the CustomerID column
+to count up the number of rows in the CustomerID for each Country, as seen by the Group By clause, which says to group
+the data by the Country column. Thsi finds out the number of customers per country
+
+I believe the Expr1000 is a placeholder since that column is not given a name...if you give it a column alias, then it will be 
+replaced by the column alias
+
+Sample Output:
+Expr1000   Country
+3        Argentina 
+2        Austria 
+2        Belgium 
+9        Brazil 
+3        Canada 
+2         Denmark 
+2         Finland 
+11        France 
+11        Germany 
+1         Ireland 
+3        Italy 
+
+Augmented:
+SELECT COUNT(CustomerID), City
+FROM Customers
+GROUP BY City
+Order by COUNT(CustomerID) DESC;
+
+I changed this query by selecting the City column instead of the Country column , and grouping it by City instead of Country.
+This now finds out the number of Customers per city (applies the Count function for the city) not for each country. Laslty, I 
+ordered it descending by the the Count of Customers per city, so the cities with the most customers appear first. 
+       
+------Augmented Sample Output: first 9 rows
+Expr1000 City
+6 London 
+5 México D.F. 
+4 São Paulo 
+3 Buenos Aires 
+3 Madrid 
+3 Rio de Janeiro 
+2 Lisboa 
+2 Nantes 
+2 Paris 
+
+____________________________________________________________________________________________________________________________
+SQL Query from W3Schools : https://www.w3schools.com/sql/sql_groupby.asp
+--This query performs a left join with two tabes and then finds the number of orders per shipper with the Count function and the group 
+by clause
+
+SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
+LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+GROUP BY ShipperName;
+
+This query selects the ShipperName column from the Shippers column and selects the number of orders from the Orders table 
+using the Count function on the OrderID column from the Orders table. This column is then named NumberofOrders. There is then 
+a left join with the Orders and Shippers table, which will get all the ShipperName vales from the Shippers table since it is the
+first table (and that is the column from the table we selected)
+and joins the rows where the ShipperID matches in both tables. This is then grouped by the ShipperName, so the 
+number of orders is returned for each ShipperName 
+
+-----Sample Output: 
+ShipperName  NumberOfOrders
+Federal Shipping  68 
+Speedy Express   54 
+United Package  74 
+
+Augmented:
+SELECT Shippers.ShipperName,COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
+LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+GROUP BY ShipperName
+Order by COUNT(Orders.OrderID) DESC ;
+
+I changed this by adding an Order by clause to order the result set descending by the NumberofOrders column, 
+also known as (COUNT(Orders.OrderID) DESC), which is what you have to write because you can't order the dataset by using the alias.
+So now the ShipperName with the most orders appears first.
+
+Augmented Sample Output:
+ShipperName   NumberOfOrders
+United Package    74 
+Federal Shipping  68 
+Speedy Express    54 
+
+______________________________________________________________________________________________________________________
+
+
+
