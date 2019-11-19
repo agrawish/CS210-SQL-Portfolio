@@ -437,13 +437,18 @@ Speedy Express    54
 ______________________________________________________________________________________________________________________
 
 SQL Query from https://www.w3schools.com/sql/sql_having.asp
---This query
+--This query counts up the number of customers per country with the COUNT function 
+and only shows those rows with at least 5 customers per country, as limited by the HAVING clause
 
 SELECT COUNT(CustomerID), Country
 FROM Customers
 GROUP BY Country
 HAVING COUNT(CustomerID) > 5;
 
+This query selects the Country column from the Custoemrs table and uses the Count function on the CustomerID column to count 
+up the number of customerID's. Since the group by clause says to group by country, the count function will count up the 
+number of CustomerID's for each country. Then only those groups that have more than five customer ID's per country will be included
+in the final result set, as indicated by the HAVING clause
 
 Sample Output: all rows 
 Expr1000   Country
@@ -456,7 +461,6 @@ Expr1000   Country
 Augmented:
 
 
-I augmented this code by
 
 ------Augmented Sample Output:
 
