@@ -436,5 +436,29 @@ Speedy Express    54
 
 ______________________________________________________________________________________________________________________
 
+SQL Query from https://www.w3schools.com/sql/sql_having.asp
+--This query
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5;
 
 
+Sample Output: all rows 
+Expr1000   Country
+9         Brazil 
+11        France 
+11         Germany 
+7         UK 
+13         USA 
+
+Augmented:
+
+
+I augmented this code by
+
+------Augmented Sample Output:
+
+
+___________________________________________________________________________________________________________________________________
