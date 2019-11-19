@@ -233,7 +233,7 @@ VendorID	AverageInvoiceAmount
 99	    6940.25
 ___________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-4 page 167 b
---This query
+--This query shows how to use the Group By clause to find the number of invoices and average invoice amount per city
 
 SELECT VendorState, VendorCity, COUNT(*) AS InvoiceQty,
     AVG(InvoiceTotal) AS InvoiceAvg
@@ -242,22 +242,57 @@ FROM Invoices JOIN Vendors
 GROUP BY VendorState, VendorCity
 ORDER BY VendorState, VendorCity;
 
+This query selects the VendorState and VendorCity column from the Vendors table
+and uses the Count function to count up the number of invoices per city/state
+which makes up the column InvoiceQty 
+(named with an alias). Then the column InvoiceAvg is selected (given a column alias) and defined by using the AVG function
+finding the average of the InvoiceTotal column to find the average invoice amount per city/state. There is also an inner join 
+with the Invoices and Vendors table, joining if the VendorID in both tables is the same. And of course, the Group by clause says to
+group by the VendorState and VendorCity, so there is a row returned with the InvoiceQty and InvoiceAvg 
+for both the VendorState and VendorCity for all of the states and cities that also match the condition.
+Lastly, the data is ordered by the VendorState ascending first, and then ascending by the VendorCity
 ------Sample Output:
-VendorCity	InvoiceQty	InvoiceAvg
-AZ	Phoenix	    1	            662.00
-CA	Fresno	    19	          1208.7457
-CA	Los Angeles	1	        503.20
-CA	Oxnard	    3	            188.00
-CA	Pasadena	  5	          196.12
-CA	Sacramento	7	        253.0014
-CA	San Francisco	3	      1211.04
-CA	Turlock	    1	            95.00
-CA	Valencia	  1	          6940.25
-DC	Washington	1	        600.00
+VendorState VendorCity	InvoiceQty	InvoiceAvg
+AZ	          Phoenix	    1	            662.00
+CA	          Fresno	    19	          1208.7457
+CA	          Los Angeles	1	        503.20
+CA	          Oxnard	    3	            188.00
+CA          	Pasadena	  5	          196.12
+CA	            Sacramento	7	        253.0014
+CA            San Francisco	3	      1211.04
+CA	            Turlock	    1	            95.00
+CA	            Valencia	  1	          6940.25
+DC	            Washington	1	        600.00
+
+Augmented:
+SELECT VendorState,  COUNT(*) AS InvoiceQty,
+    AVG(InvoiceTotal) AS InvoiceAvg
+FROM Invoices JOIN Vendors
+    ON Invoices.VendorID = Vendors.VendorID
+GROUP BY VendorState 
+ORDER BY VendorState ;
+
+To change this program, I wanted to see what would happen if you only grouped the result set by one column: the VendorState
+and not the VendorCity. So I removed the VendorCity column from both the first line and from the group by clause. This now shows the 
+number of invoices and average invoice amount for each VendorState, not for each city in each state. 
+
+-------Augmented Sample Output:
+VendorState	InvoiceQty	InvoiceAvg
+AZ            	1	        662.00
+CA	            40        936.3337
+DC	              1	      600.00
+MA	             1	      1367.50
+MI	              7	      20259.96
+NV	             10	      2536.246
+OH	              3	      75.8933
+PA	              2	      132.68
+TN	             47	      93.1493
+TX            	  2	      1077.21
 
 _________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server for Developers 2016 figure 5-4 page 167 c
---This query
+--This query uses the Count and Avg fucntion and the group by clause to determine the number of invoices and the invoice average 
+only for those vendor city/state with at least 2 invoices
 
 SELECT VendorState, VendorCity, COUNT(*) AS InvoiceQty,
     AVG(InvoiceTotal) AS InvoiceAvg
@@ -266,6 +301,15 @@ FROM Invoices JOIN Vendors
 GROUP BY VendorState, VendorCity
 HAVING COUNT(*) >= 2
 ORDER BY VendorState, VendorCity;
+
+This query selects the VendorState and VendorCity columns from the Vendors table and uses the Count function to find the number
+of invoices and the Avg function to find the average invoice amount for each state and city of the vendor. 
+It named the column that counts up the invoices as InvoiceQty with an alias, and names the column that shows the average 
+invoice total as InvoiceAvg, again, named with an alias. There is an inner join with
+the Vendors and Invoices table based on if their VendorID match in both tables. The reuslts are then grouped by the VendorState
+and VendorCity, meaning there is a InvoiceQty and InvoiceAvg returned for each city and state. Then the HAVING clause applies a filter
+to that by only uncluding those rows where the InvoiceQty has a value of at least 2, meaning a VendorCity of a partucular state 
+has at least 2 invoices, if not more. Then the rows are put in order ascending by the VendorState, and then ascending by the VendorCity
 
 ------Sample Output:
 VendorState	VendorCity	  InvoiceQty	InvoiceAvg
@@ -279,4 +323,26 @@ MI	            Auburn Hills    	2   	10963.655
 NV	            Reno	            9   	2575.3288
 OH	            Columbus	        2	    9.95
 PA	            Philadelphia	    2   	132.68
+
+Augmented:
+SELECT VendorState, VendorCity, COUNT(*) AS InvoiceQty,
+    AVG(InvoiceTotal) AS InvoiceAvg
+FROM Invoices JOIN Vendors
+    ON Invoices.VendorID = Vendors.VendorID
+GROUP BY VendorState, VendorCity
+HAVING COUNT(*) >= 5
+ORDER BY VendorState, VendorCity;
+
+I changed this program by showing what happens if I change the HAVING clause to having a count of at least 5. This would now
+only show rows where the InvoiceQty column had at least a value of 5, meaning there has to be at least five invoices 
+per VendorCity/State for the row to appear in the final result set.
+
+----Augmented Sample Output: all rows
+VendorState	VendorCity	InvoiceQty	InvoiceAvg
+CA	Fresno	19	1208.7457
+CA	Pasadena	5	196.12
+CA	Sacramento	7	253.0014
+MI	Ann Arbor	5	23978.482
+NV	Reno	9	2575.3288
+TN	Memphis	47	93.1493
 ________________________________________________________________________________________________________________________________
