@@ -459,10 +459,20 @@ Expr1000   Country
 13         USA 
 
 Augmented:
+SELECT COUNT(CustomerID) AS CustomersPerCountry, Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5;
 
-
+I augmented this query by making the sample output be more usefult to read. I added a column alias, naming COUNT(CustomerID)
+as CustomerPerCountry becasue that column shows how mnay customer ID's there are for each country selected. 
 
 ------Augmented Sample Output:
-
+CustomersPerCountry	Country
+9	                  Brazil
+11                	France
+11                	Germany
+7	                  UK
+13	                USA
 
 ___________________________________________________________________________________________________________________________________
