@@ -164,7 +164,7 @@ ________________________________________________________________________________
 
 SQL Query from Murach's SQL Server 2016 for Developers figure 6-5 A page 193
 --This query will retrieve vendors that are common to the Vendors and invoices table that have an invoicetotal higher than 
-the largest InvoiceTotal for Vendor 34
+the largest InvoiceTotal for Vendor 34 using the ALL keyword and a subquery
 
 SELECT VendorName, InvoiceNumber, InvoiceTotal
 FROM Invoices JOIN Vendors ON Invoices.VendorID = Vendors.VendorID
@@ -208,6 +208,92 @@ Ingram	31359783	1575.00	83
 
 __________________________________________________________________________________________________________________________
 
-SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
+SQL Query from Murach's SQL Server 2016 for Developers figure 6-6 A page 195
+--This query will select info for vendors that are common to both the Invoices and Vendors table, joining those tables and 
+including only those rows that have anInvoiceTotal less than the biggest InvoiceTotal for vendor 115
 
-SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
+SELECT VendorName, InvoiceNumber, InvoiceTotal
+FROM Vendors JOIN Invoices ON Vendors.VendorID = Invoices.VendorID
+WHERE InvoiceTotal < ANY
+    (SELECT InvoiceTotal
+    FROM Invoices
+    WHERE VendorID = 115);
+
+This query selects the VendorName from the Vendors table and the InvoiceNumber and InvoiceTotal columns from the Invoices table.
+Then the two tables are joined with an inner join, joining the rows where the VendorID is the same in both tables. Then there is a 
+subquery that will select all the InvoiceTotals from the Invoices table for the Vendor with a VendorID of 115.Then the ANY keyword
+in the where clause makes it so only those Vendors (common to both tables of course)
+with the InvoiceTotals less than the largest InvoiceTotal selected by the 
+subquery are included in the final result. So since the largest InvoiceTotal selected by the subquery was 25.67, the result set can
+have any results with an InvoiceTotal smaller than 25.67
+
+----Sample Output:
+VendorName	InvoiceNumber	InvoiceTotal
+Abbey Office Furnishings	203339-13	17.50
+Pacific Bell	111-92R-10096	16.33
+Pacific Bell	111-92R-10097	16.33
+Pacific Bell	111-92R-10094	19.67
+Compuserve	21-4923721	9.95
+Compuserve	21-4748363	9.95
+Roadway Package System, Inc	25022117	6.00
+Roadway Package System, Inc	24863706	6.00
+Roadway Package System, Inc	24780512	6.00
+Suburban Propane	111897	16.62
+
+Augmented:
+SELECT VendorName, InvoiceNumber, InvoiceTotal
+FROM Vendors JOIN Invoices ON Vendors.VendorID = Invoices.VendorID
+WHERE InvoiceTotal > ANY
+    (SELECT InvoiceTotal
+    FROM Invoices
+    WHERE VendorID = 115)
+	Order by InvoiceTotal;
+
+I augmented this by changing the < sign to a > sign so that now any Vendors that have an InvoiceTotal bigger than ANY of the
+InvoiceTotals selected by the subquery are included in the final result set. And since the smallest InvoiceTotal selected by 
+the subquery is 6.0, then those vendors common to both tables with an InvoiceTotal larger than 6.0 are included.
+
+-----Augmented Sample Output:
+VendorName	InvoiceNumber	InvoiceTotal
+Compuserve	21-4748363	9.95
+Compuserve	21-4923721	9.95
+Federal Express Corporation	4-342-8069	10.00
+Federal Express Corporation	4-321-2596	10.00
+Federal Express Corporation	43966316	10.00
+Federal Express Corporation	4-314-3057	13.75
+Federal Express Corporation	963253251	15.50
+Pacific Bell	111-92R-10096	16.33
+Pacific Bell	111-92R-10097	16.33
+Suburban Propane	111897	16.62
+________________________________________________________________________________________________________________________________
+
+SQL Query from Murach's SQL Server 2016 for Developers figure 6-8 A page 199
+--This query
+
+SELECT VendorID, VendorName, VendorState
+FROM Vendors
+WHERE NOT EXISTS
+    (SELECT *
+    FROM Invoices
+    WHERE Invoices.VendorID = Vendors.VendorID);
+
+
+----Sample Output:
+VendorID	VendorName	VendorState
+1	US Postal Service	WI
+2	National Information Data Ctr	DC
+3	Register of Copyrights	DC
+4	Jobtrak	CA
+5	Newbrige Book Clubs	NJ
+6	California Chamber Of Commerce	CA
+7	Towne Advertiser's Mailing Svcs	CA
+8	BFI Industries	CA
+9	Pacific Gas & Electric	CA
+10	Robbins Mobile Lock And Key	CA
+
+Augmented:
+
+
+-----Augmented Sample Output:
+
+
