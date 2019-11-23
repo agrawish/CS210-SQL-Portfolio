@@ -64,7 +64,9 @@ WHERE VendorID IN
 ORDER BY InvoiceDate;
 
 This query selects the InvoiceNumber, InvoiceDate, and InvoiceTotal columns from the Invoices table. Then the where clause 
-has a subquery and an IN operator where if the VendorID matches 
+has a subquery. The subquery selects VendorID's for Vendors with their corresponding VendorState as CA. The where clause also has an
+IN operator where if the VendorID matches those vendorID's selected by the subquery, then those rows with those VendorID's are
+selected for the final reuslt set. Then the result is ordered by InvoiceDate oldest to newest.
 
 ------Sample Output:
 InvoiceNumber	InvoiceDate	InvoiceTotal
@@ -81,8 +83,30 @@ QP58872	2016-01-07 00:00:00	116.54
 
 Augmented Code:
 
-------Augmented Sample Ouput:
+Select DefaultTermsID, VendorName, VendorPhone 
+from Vendors
+where DefaultTermsID in
+(Select termsID 
+from Terms);
 
+I augmented this code by writing a new code with almost the same structure just removing the where clause that was within the subquery.
+I chose to Select the DefaultTermsID, VendorName, and VendorPhone columns form the Vendors table and then do basically an 
+inner join with the DefaultTermsID and the termsID column from the  Vendors and Terms table. I had a subquery that would select 
+the termsID from the Terms table and then the IN operator would basically select those rows where the termsID form the subquery 
+matched the DefaultTermsID from the Vendors table.
+
+------Augmented Sample Ouput:
+DefaultTermsID	VendorName	VendorPhone
+1	US Postal Service	(800) 555-1205
+3	National Information Data Ctr	(301) 555-8950
+3	Register of Copyrights	NULL
+3	Jobtrak	(800) 555-8725
+4	Newbrige Book Clubs	(800) 555-9980
+3	California Chamber Of Commerce	(916) 555-6670
+3	Towne Advertiser's Mailing Svcs	NULL
+3	BFI Industries	(559) 555-1551
+3	Pacific Gas & Electric	(800) 555-6081
+2	Robbins Mobile Lock And Key	(559) 555-9375
 _____________________________________________________________________________________________________________________________
 SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
 
