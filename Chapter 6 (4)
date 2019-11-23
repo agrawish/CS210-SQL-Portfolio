@@ -120,8 +120,12 @@ WHERE VendorID NOT IN
     (SELECT DISTINCT VendorID
     FROM Invoices);
     
-    -----Augmented Sample Ouput:
-    VendorID	VendorName	VendorState
+    This query selects the VendorID, VendorName, and VendorState columns from the Vendors table and then has a where clause with a 
+    subquery in it. The subquery selects all the different VendorID's from the Invoices table. Then the where clause together will
+    only include those rows in the result set if the VendorID from thr Vendors dosen't match the VendorID's selected by the subquery
+    
+-----Sample Ouput:
+VendorID	VendorName	VendorState
 1	US Postal Service	WI
 2	National Information Data Ctr	DC
 3	Register of Copyrights	DC
@@ -133,8 +137,76 @@ WHERE VendorID NOT IN
 9	Pacific Gas & Electric	CA
 10	Robbins Mobile Lock And Key	CA
 
+Augmented:
+SELECT VendorID, VendorName, VendorState
+FROM Vendors
+WHERE VendorID NOT IN
+    (SELECT DISTINCT VendorID
+    FROM Invoices)
+Order by VendorState;
 
-SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
+ I augmented this code by adding an order by clause to order the result set by the VendorState column ascending.
+
+-----Augmented Sample Output:
+VendorID	VendorName	VendorState
+68	Computer Library	AZ
+93	AT&T	AZ
+98	American Express	CA
+101	California Business Machines	CA
+109	Kent H Landsberg Co	CA
+111	Net Asset, Llc	CA
+112	Office Depot	CA
+116	State of California	CA
+118	Unocal	CA
+120	Dataforms/West	CA
+
+___________________________________________________________________________________________________________________________
+
+SQL Query from Murach's SQL Server 2016 for Developers figure 6-5 A page 193
+--This query will retrieve vendors that are common to the Vendors and invoices table that have an invoicetotal higher than 
+the largest InvoiceTotal for Vendor 34
+
+SELECT VendorName, InvoiceNumber, InvoiceTotal
+FROM Invoices JOIN Vendors ON Invoices.VendorID = Vendors.VendorID
+WHERE InvoiceTotal > ALL
+    (SELECT InvoiceTotal
+    FROM Invoices
+    WHERE VendorID = 34)
+ORDER BY VendorName;
+
+This query selects the VendorName column from the Vendors table
+and the InvoiceNumber and InvoiceTotal columns form the Invoices table and performs an inner join between the two tables based on
+the VendorID. If the VendorID is the same in both the tables, then those rows are selected. Then the subquery in the where clause 
+will select the InvoiceTotal's for Vendor 34 from the Invoices table. The ALL keyword makes it so that only rows that have 
+InvoiceTotal's higher than the largest InvoiceTotal selected by the subquery are included in the final result set. 
+
+Augmented:
+SELECT VendorName, InvoiceNumber, InvoiceTotal, Invoices.VendorID
+FROM Invoices JOIN Vendors ON Invoices.VendorID = Vendors.VendorID
+WHERE InvoiceTotal > ALL
+    (SELECT InvoiceTotal
+    FROM Invoices
+    WHERE VendorID = 123)
+ORDER BY VendorName;
+
+I augmented this code by selecting one more column: the VendorID column from the Invoices table, and by changing the subquery
+to where the VendorID is 123 and not 34, so now those vendors that are common to the Vendors and invoices table
+that have an invoicetotal higher than the biggest InvoiceTotal for Vendor 123 are selected.
+
+-----Augmeted Sample Output:
+VendorName	InvoiceNumber	InvoiceTotal	VendorID
+Bertelsmann Industry Svcs. Inc	509786	6940.25	99
+Cahners Publishing Company	587056	2184.50	100
+Computerworld	367447	2433.00	86
+Data Reproductions Corp	40318	21842.00	72
+Dean Witter Reynolds	75C-90227	1367.50	103
+Digital Dreamworks	P02-3772	7125.34	104
+Franchise Tax Board	RTR-72-3662-X	1600.00	107
+Fresno County Tax Collector	P02-88D77S7	856.92	48
+IBM	Q545443	1083.58	34
+Ingram	31359783	1575.00	83
+
+__________________________________________________________________________________________________________________________
 
 SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
 
