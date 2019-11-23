@@ -1,0 +1,93 @@
+SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
+
+--This query shows how to use a subquery as a search condition within the overall query as a way to simplify the query potentially
+
+SELECT InvoiceNumber, InvoiceDate, InvoiceTotal
+FROM Invoices
+WHERE InvoiceTotal > 
+    (SELECT AVG(InvoiceTotal)
+     FROM Invoices)
+ORDER BY InvoiceTotal;
+
+This query selects the InvoiceNumber, InvoiceDate, and Invoicetotal columns from the Invocies table. The search condition in
+the where clause is subsituted with another query (a subquery). The subquery selects the average of the InvoiceTotal column of
+the Invoices table. So when put together in the where clause, it means the result set will only include rows where the InvoiceTotal 
+is greater than the average InvoiceTotal. Then the results are put in order ascending by the InvoiceTotal.
+
+----Sample Output:
+InvoiceNumber	InvoiceDate	InvoiceTotal
+989319-487	2016-02-20 00:00:00	1927.54
+97/522	2016-02-28 00:00:00	1962.13
+989319-417	2016-03-23 00:00:00	2051.59
+989319-427	2016-02-16 00:00:00	2115.81
+989319-477	2016-02-08 00:00:00	2184.11
+587056	2016-02-28 00:00:00	2184.50
+989319-497	2016-02-12 00:00:00	2312.20
+989319-467	2016-03-01 00:00:00	2318.03
+367447	2016-02-11 00:00:00	2433.00
+989319-437	2016-02-01 00:00:00	2765.36
+
+Augmented: 
+SELECT InvoiceNumber, InvoiceDate, InvoiceTotal
+FROM Invoices
+WHERE InvoiceTotal <
+    (SELECT AVG(InvoiceTotal)
+     FROM Invoices)
+ORDER BY InvoiceTotal;
+
+I augmented this code by chnaging the greater than to a less than so now only those rows where the InvoiceTotal is less than the average
+InvoiceTotal will be included in the final result set. 
+
+------Augmented Sample Ouput:
+InvoiceNumber	InvoiceDate	InvoiceTotal
+25022117	2016-01-01 00:00:00	6.00
+24863706	2016-01-10 00:00:00	6.00
+24780512	2016-02-22 00:00:00	6.00
+21-4923721	2016-01-13 00:00:00	9.95
+21-4748363	2016-01-03 00:00:00	9.95
+4-321-2596	2016-01-05 00:00:00	10.00
+4-342-8069	2016-01-14 00:00:00	10.00
+43966316	2016-02-22 00:00:00	10.00
+4-314-3057	2016-02-11 00:00:00	13.75
+963253251	2015-12-16 00:00:00	15.50
+
+_______________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server 2016 for Developers figure 6-2 A page 187
+--This query selects vendors common to two tables from the same state using a subquery and the IN operator to do so
+
+SELECT InvoiceNumber, InvoiceDate, InvoiceTotal
+FROM Invoices
+WHERE VendorID IN
+    (SELECT VendorID
+    FROM Vendors
+    WHERE VendorState = 'CA')
+ORDER BY InvoiceDate;
+
+This query selects the InvoiceNumber, InvoiceDate, and InvoiceTotal columns from the Invoices table. Then the where clause 
+has a subquery and an IN operator where if the VendorID matches 
+
+------Sample Output:
+InvoiceNumber	InvoiceDate	InvoiceTotal
+125520-1	2015-12-24 00:00:00	95.00
+97/488	2015-12-24 00:00:00	601.95
+111-92R-10096	2015-12-30 00:00:00	16.33
+25022117	2016-01-01 00:00:00	6.00
+P02-88D77S7	2016-01-03 00:00:00	856.92
+QP58872	2016-01-07 00:00:00	116.54
+24863706	2016-01-10 00:00:00	6.00
+10843	2016-01-11 00:00:00	4901.26
+77290	2016-01-13 00:00:00	1750.00
+121897	2016-01-19 00:00:00	450.00
+
+Augmented Code:
+
+------Augmented Sample Ouput:
+
+_____________________________________________________________________________________________________________________________
+SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
+
+SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
+
+SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
+
+SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
