@@ -1,0 +1,43 @@
+SQL Query from w3Schools https://www.w3schools.com/sql/func_mysql_upper.asp
+--This query uses the UPPER function to convert some text to have all upper case letters
+
+SELECT UPPER(CustomerName) AS UppercaseCustomerName
+FROM Customers;
+
+This query uses the UPPER function on the column CustomerName from the Customers table and uses a column 
+alias to name that column as UppercaseCustomerName. Now all the customers' names are in all caps
+
+-------Sample Output:
+UppercaseCustomerName
+ALFREDS FUTTERKISTE
+ANA TRUJILLO EMPAREDADOS Y HELADOS
+ANTONIO MORENO TAQUERÍA
+AROUND THE HORN
+BERGLUNDS SNABBKÖP
+BLAUER SEE DELIKATESSEN
+BLONDEL PÈRE ET FILS
+BÓLIDO COMIDAS PREPARADAS
+BON APP'
+BOTTOM-DOLLAR MARKETSE
+
+Augmented:
+SELECT UPPER(FirstName) AS UppercaseEmployeeFirstName, UPPER(LastName) AS UppercaseEmployeeLastName
+FROM Employees;
+
+I augmented this code by applying this function in the same way to another table: the Employees table. So I applied the 
+upper function to the FirstName and the LastName colums of the Employees table and selected those columns, naming then 
+UppercaseEmployeeFirstName and 	UppercaseEmployeeLastName respectively with 2 column aliases
+
+----Augmented Sample Output:
+UppercaseEmployeeFirstName	UppercaseEmployeeLastName
+NANCY                     	DAVOLIO
+ANDREW                    	FULLER
+JANET                     	LEVERLING
+MARGARET	                  PEACOCK
+STEVEN	                    BUCHANAN
+MICHAEL                   	SUYAMA
+ROBERT                    	KING
+LAURA                     	CALLAHAN
+ANNE                      	DODSWORTH
+
+__________________________________________________________________________________________________________________________________
