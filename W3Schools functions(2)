@@ -41,3 +41,34 @@ LAURA                     	CALLAHAN
 ANNE                      	DODSWORTH
 
 __________________________________________________________________________________________________________________________________
+SQL Query from W3Schools https://www.w3schools.com/sql/func_sqlserver_len.asp
+--This demonstrates the use of the LEN function to find the length of a specificied string
+
+SELECT LEN('2017-08');
+Ouput:
+7
+
+This code uses the LEN function on the string '2017-08' to calculate the legnth of it, which coms out to 7 as in the output
+
+Augmented:
+SELECT CustomerName, LEN(CustomerName) AS length
+FROM Customers;
+
+I used this LEN function on the Customers table to find the LENGTH of the CustomerName column from that table, which
+was named length with a column alias. I also selected 
+the CustomerName column to see the name of the customer along with it's calculated length side by side 
+
+Augmented Sample Output:
+CustomerName	length
+Alfreds Futterkiste	19
+Ana Trujillo Emparedados y helados	34
+Antonio Moreno Taquería	23
+Around the Horn	15
+Berglunds snabbköp	18
+Blauer See Delikatessen	23
+Blondel père et fils	20
+Bólido Comidas preparadas	25
+Bon app	7
+Bottom-Dollar Marketse	22
+
+________________________________________________________________________________________________________________________________
