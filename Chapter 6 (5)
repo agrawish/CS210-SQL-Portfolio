@@ -255,45 +255,16 @@ the subquery is 6.0, then those vendors common to both tables with an InvoiceTot
 
 -----Augmented Sample Output:
 VendorName	InvoiceNumber	InvoiceTotal
-Compuserve	21-4748363	9.95
-Compuserve	21-4923721	9.95
+Compuserve			21-4748363	9.95
+Compuserve			21-4923721	9.95
 Federal Express Corporation	4-342-8069	10.00
 Federal Express Corporation	4-321-2596	10.00
 Federal Express Corporation	43966316	10.00
 Federal Express Corporation	4-314-3057	13.75
 Federal Express Corporation	963253251	15.50
-Pacific Bell	111-92R-10096	16.33
-Pacific Bell	111-92R-10097	16.33
-Suburban Propane	111897	16.62
+Pacific Bell			111-92R-10096	16.33
+Pacific Bell			111-92R-10097	16.33
+Suburban Propane		111897		16.62
 ________________________________________________________________________________________________________________________________
-
-SQL Query from Murach's SQL Server 2016 for Developers figure 6-8 A page 199
---This query
-
-SELECT VendorID, VendorName, VendorState
-FROM Vendors
-WHERE NOT EXISTS
-    (SELECT *
-    FROM Invoices
-    WHERE Invoices.VendorID = Vendors.VendorID);
-
-
-----Sample Output:
-VendorID	VendorName	VendorState
-1	US Postal Service	WI
-2	National Information Data Ctr	DC
-3	Register of Copyrights	DC
-4	Jobtrak	CA
-5	Newbrige Book Clubs	NJ
-6	California Chamber Of Commerce	CA
-7	Towne Advertiser's Mailing Svcs	CA
-8	BFI Industries	CA
-9	Pacific Gas & Electric	CA
-10	Robbins Mobile Lock And Key	CA
-
-Augmented:
-
-
------Augmented Sample Output:
 
 
