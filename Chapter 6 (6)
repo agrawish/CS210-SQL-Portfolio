@@ -1,6 +1,7 @@
 SQL Query from Murach's SQL Server 2016 for Developers figure 6-1 A page 185
 
---This query shows how to use a subquery as a search condition within the overall query as a way to simplify the query potentially
+--This query shows how to use a subquery as a search condition within the overall query as a way to simplify the query potentially,
+selecting only those Invoices that have a total higher than the average invoice total
 
 SELECT InvoiceNumber, InvoiceDate, InvoiceTotal
 FROM Invoices
