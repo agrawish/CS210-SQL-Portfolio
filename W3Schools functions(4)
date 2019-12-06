@@ -104,3 +104,59 @@ CustomerID CustomerName ContactName Address City PostalCode Country
 16  Consolidated Holdings  Elizabeth Brown  Berkeley Gardens 12 Brewery   London  WX1 6LT  UK 
 
 _______________________________________________________________________________________________________________________________
+SQL Query from w3Schools  https://www.w3schools.com/sql/sql_case.asp
+--This query labels the quantities corresponding to the OrderID as either greater than 30, 30, or less than 30 using the
+CASE statement
+
+SELECT OrderID, Quantity,
+CASE WHEN Quantity > 30 THEN "The quantity is greater than 30"
+WHEN Quantity = 30 THEN "The quantity is 30"
+ELSE "The quantity is under 30"
+END AS QuantityText
+FROM OrderDetails;
+
+This query selects the OrderID and Quantity columns from the OrderDetails table. It also uses the CASE statement to label the
+quantities as either greater than 30, 30, or under 30. For example, it first checks if the Quantity is greater than 30. If it is,
+then the column named with an alias QuantityText gets the value ""The quantity is greater than 30" for that row with the Quantity 
+over 30. SImilarily, if the Quantity is 30, then it gets the value "The Quantity is 30", and lastly, if none of those conditions are
+the case, then the ELSE part comes in, having the column QuantityText get the value "The quantity is under 30" for that row with
+the quantity not greater than or equal to 30. It then has the END keyword and proceedes to use a column alias QuantityText, which
+was the column that received all these values based on the quantity.
+
+Sample Output:
+OrderID     Quantity        QuantityText
+10248        12 The quantity is under 30
+10248        10 The quantity is under 30
+10248         5 The quantity is under 30
+10249         9 The quantity is under 30
+10249        40 The quantity is greater than 30
+10250       10 The quantity is under 30
+10250       35 The quantity is greater than 30
+10250       15 The quantity is under 30
+
+Augmented Code:
+SELECT ProductID, ProductName, Price,
+CASE WHEN Price > 100 THEN "Expensive"
+WHEN Price> 25 AND Price<100 THEN "The price is somewhat expensive"
+ELSE "Good Price"
+END AS PriceText
+FROM Products;
+
+ To augment the code I basically followed the same structure of the code to apply to the Products table and the column Price
+ (instead of Quantity). So here I check the Price of each product, and based on that , the column named with an alias Pricetext
+ will be given the value "Expensive" , "The price is somewhat expensive", or "Good Price" for each product from the Products table
+ For example, if the Price is greater than 25 but less then 100, then the column PriceText gets the value "The price is somewhat 
+ expensive"
+ 
+------Augmented Sample Output:
+ProductID ProductName Price PriceText
+1 Chais 18.00 Good Price
+2 Chang 19.00 Good Price
+3 Aniseed Syrup 10.00 Good Price
+4 Chef Anton's Cajun Seasoning 22.00 Good Price
+5 Chef Anton's Gumbo Mix 21.35 Good Price
+6 Grandma's Boysenberry Spread 25.00 Good Price
+7 Uncle Bob's Organic Dried Pears 30.00 The price is somewhat expensive
+8 Northwoods Cranberry Sauce 40.00 The price is somewhat expensive
+
+___________________________________________________________________________________________________________________________________
