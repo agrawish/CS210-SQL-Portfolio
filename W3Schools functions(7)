@@ -242,13 +242,15 @@ Bon app                            International
 
 ____________________________________________________________________________________________
 SQL Query from W3Schools https://www.w3schools.com/sql/sql_between.asp
---This is another between query but with dates to...
+--This is another BETWEEN operator query but between 2 ProductName string values rather than numeric values
 
 SELECT * FROM Products
 WHERE ProductName BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni'
 ORDER BY ProductName;
 
-This query
+This query selects everything from the Products table where the ProductName column has values between 'Carnarvron Tigers' and 
+'Mozzarella di Giovanni', and then the results are ordered by ProductName. Since the rows selected have ProductName values between
+these two names, it basically means those results that fall alphabetically between those two names are included in the final result set
 
 Sample Output:
 ProductID ProductName SupplierID CategoryID Unit Price
@@ -265,6 +267,10 @@ Augmented:
 SELECT * FROM Products
 WHERE ProductName BETWEEN 'Escargots de Bourgogne ' AND 'Louisiana Hot Spiced Okra '
 ORDER BY ProductName;
+
+I augmented this code by changing the BETWEEN values from 'Carnarvon Tigers' AND 'Mozzarella di Giovanni' to 
+'Escargots de Bourgogne ' AND 'Louisiana Hot Spiced Okra ' so now those rows that have a ProductName between those two
+aphabetically will now be included in the final result set. 
 
 -----Augmented Sample Output:
 ProductName Price
