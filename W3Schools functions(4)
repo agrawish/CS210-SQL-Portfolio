@@ -160,3 +160,109 @@ ProductID ProductName Price PriceText
 8 Northwoods Cranberry Sauce 40.00 The price is somewhat expensive
 
 ___________________________________________________________________________________________________________________________________
+SQL Query from W3Schools https://www.w3schools.com/sql/sql_between.asp
+--This query 
+
+SELECT * FROM Products
+WHERE Price BETWEEN 10 AND 20;
+
+This query
+
+Sample Output:
+ProductID ProductName SupplierID CategoryID Unit Price
+1  Chais  1  1  10 boxes x 20 bags  18 
+2  Chang  1  1  24 - 12 oz bottles  19 
+3  Aniseed Syrup  1  2  12 - 550 ml bottles  10 
+15  Genen Shouyu  6  2  24 - 250 ml bottles  15.5 
+16 Pavlova 7 3  32 - 500 g boxes 17.45 
+21 Sir Rodney's Scones 8 3 24 pkgs. x 4 pieces 10 
+25 NuNuCa Nuß-Nougat-Creme 11 3 20 - 450 g glasses  14 
+
+Augmented:
+SELECT * FROM Products
+WHERE Price BETWEEN 10 AND 20
+AND ProductName LIKE 'c%';
+
+-------Augmeted Sample Output:
+ProductID ProductName SupplierID CategoryID Unit Price
+1  Chais  1  1  10 boxes x 20 bags  18 
+2  Chang  1  1  24 - 12 oz bottles  19 
+39  Chartreuse verte  18  1  750 cc per bottle  18 
+48  Chocolade  22  3  10 pkgs.  12.75 
+
+___________________________________________________________________________________________
+SQL Query from W3Schools https://www.w3schools.com/sql/func_sqlserver_iif.asp
+--This query
+
+SELECT OrderID, Quantity, IIF(Quantity>10, 'MORE', 'LESS')
+FROM OrderDetails;
+
+----Sample Output:
+OrderID Quantity
+10248 12 MORE
+10248 10 LESS
+10248 5 LESS
+10249 9 LESS
+10249 40 MORE
+10250 10 LESS
+10250 35 MORE
+10250 15 MORE
+
+Aumented:
+SELECT CustomerName, IIF(Country='USA', 'National', 'International')
+FROM Customers;
+
+-----Augmeted Sample Output:
+CustomerName
+Alfreds Futterkiste                International
+Ana Trujillo Emparedados y helados International
+Antonio Moreno Taquería            International
+Around the Horn                    International
+Berglunds snabbköp                 International
+Blauer See Delikatessen            International
+Blondel père et fils               International
+Bólido Comidas preparadas          International
+Bon app                            International
+
+____________________________________________________________________________________________
+SQL Query from W3Schools https://www.w3schools.com/sql/sql_between.asp
+--This is another between query but with dates to...
+
+SELECT * FROM Products
+WHERE ProductName BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni'
+ORDER BY ProductName;
+
+This query
+
+Sample Output:
+ProductID ProductName SupplierID CategoryID Unit Price
+18  Carnarvon Tigers  7  8  16 kg pkg.  62.5 
+1  Chais  1  1  10 boxes x 20 bags  18 
+2  Chang  1  1  24 - 12 oz bottles  19 
+39  Chartreuse verte  18  1  750 cc per bottle 18  
+4  Chef Anton's Cajun Seasoning  2  2  48 - 6 oz jars  22 
+5  Chef Anton's Gumbo Mix  2  2  36 boxes  21.35 
+48  Chocolade  22  3  10 pkgs.  12.75 
+38  Côte de Blaye  18  1  12 - 75 cl bottles  263.5
+
+Augmented:
+SELECT * FROM Products
+WHERE ProductName BETWEEN 'Escargots de Bourgogne ' AND 'Louisiana Hot Spiced Okra '
+ORDER BY ProductName;
+
+-----Augmented Sample Output:
+ProductName Price
+Escargots de Bourgogne  13.25 
+Filo Mix  7 
+Fløtemysost  21.5 
+Geitost  2.5 
+Genen Shouyu  15.5 
+Gnocchi di nonna Alice  38 
+Gorgonzola Telino  12.5 
+Grandma's Boysenberry Spread  25 
+Gravad lax  26 
+Guaraná Fantástica  4.5 
+Gudbrandsdalsost  36 
+Gula Malacca  19.45 
+
+________________________________________________________________________________________________
