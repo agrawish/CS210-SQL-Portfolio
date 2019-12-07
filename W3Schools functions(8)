@@ -196,7 +196,7 @@ ProductID ProductName SupplierID CategoryID Unit Price
 39  Chartreuse verte  18  1  750 cc per bottle  18 
 48  Chocolade  22  3  10 pkgs.  12.75 
 
-___________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________________
 SQL Query from W3Schools https://www.w3schools.com/sql/func_sqlserver_iif.asp
 --This query uses the IFF statement to label the quantity as either MORE or LESS in another column based on the Quantity itself
 
@@ -240,7 +240,7 @@ Blondel père et fils               International
 Bólido Comidas preparadas          International
 Bon app                            International
 
-____________________________________________________________________________________________
+____________________________________________________________________________________________________________________________
 SQL Query from W3Schools https://www.w3schools.com/sql/sql_between.asp
 --This is another BETWEEN operator query but between 2 ProductName string values rather than numeric values
 
@@ -287,4 +287,42 @@ Guaraná Fantástica  4.5
 Gudbrandsdalsost  36 
 Gula Malacca  19.45 
 
-________________________________________________________________________________________________
+_______________________________________________________________________________________________________________________________
+SQL Query from W3Schools https://www.w3schools.com/sql/sql_null_values.asp
+--This query will select info for those Customers from the Customers table that have the Address column with NULL values, 
+meaning those columns that do not have an Address listed
+
+SELECT CustomerName, ContactName, Address
+FROM Customers
+WHERE Address IS NULL;
+
+This query selects the CustomerName, ContactName, and Address columns from the Customers table but only those rows are 
+selected that have A NULL value in the Address column.
+
+------Sample Output:
+CustomerName ContactName Address
+*Notice how there are no results here...this means that there are no NULL values in the Address column
+
+Augmented:
+SELECT VendorName, VendorPhone
+FROM Vendors
+WHERE VendorPhone IS NULL;
+
+I augmeted this code by using a different database: AP. Here I wanted those vendors that did not have a phone number listed. 
+I selected the VendorName and VendorPhone columns from the Vendors table, only selecting those rows that have a NULL value for the 
+VendorPhone column.
+
+------Augmented Sample Output:
+VendorName	                  VendorPhone
+Register of Copyrights	         NULL
+Towne Advertiser's Mailing Svcs	NULL
+Golden Eagle Insurance Co	      NULL
+ASC Signs	                      NULL
+Internal Revenue Service	       NULL
+Zee Medical Service Co	         NULL
+Small Press               	     NULL
+Costco	                         NULL
+Nielson                        	NULL
+Nat Assoc of College Stores	    NULL
+
+_________________________________________________________________________________________________________________________
