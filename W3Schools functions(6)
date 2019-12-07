@@ -198,10 +198,14 @@ ProductID ProductName SupplierID CategoryID Unit Price
 
 ___________________________________________________________________________________________
 SQL Query from W3Schools https://www.w3schools.com/sql/func_sqlserver_iif.asp
---This query
+--This query uses the IFF statement to label the quantity as either MORE or LESS in another column based on the Quantity itself
 
 SELECT OrderID, Quantity, IIF(Quantity>10, 'MORE', 'LESS')
 FROM OrderDetails;
+
+This query selects the OrderID and Quantity columns from the OrderDetails table. It also has an IFF statement to give a column 
+(that is unamed) the value 'MORE' if the condition Quantity>10 is true, and give
+it the value 'LESS' if the condition is not true, meaning the Quantity is less than 10
 
 ----Sample Output:
 OrderID Quantity
@@ -217,6 +221,12 @@ OrderID Quantity
 Aumented:
 SELECT CustomerName, IIF(Country='USA', 'National', 'International')
 FROM Customers;
+
+I augmented this code to follow the same structure but based on the Customers table to figure out of the customer was national 
+or international based on the value in the Country column of the Customers table. So here I select the CustomerName and then
+have an IFF statement that evaluates if the Country column has a value of 'USA'. If it does, then a seperate column will get the value
+'National'. Otherwise, that column will get the value 'International'.
+
 
 -----Augmeted Sample Output:
 CustomerName
