@@ -161,12 +161,14 @@ ProductID ProductName Price PriceText
 
 ___________________________________________________________________________________________________________________________________
 SQL Query from W3Schools https://www.w3schools.com/sql/sql_between.asp
---This query 
+--This query selects those rows with all the columns from the Products table if the price is between 10 and 20, using the BETWEEN oper.
 
 SELECT * FROM Products
 WHERE Price BETWEEN 10 AND 20;
 
-This query
+This query selects everything from the Products table and has the where clause to filter the results to only include those results 
+where the Price falls in the range of 10-20. This is seen by the BETWEEN operatory which gives the range for the Price, and so if 
+the price is between 10 and 20, then those rows are included
 
 Sample Output:
 ProductID ProductName SupplierID CategoryID Unit Price
@@ -182,6 +184,10 @@ Augmented:
 SELECT * FROM Products
 WHERE Price BETWEEN 10 AND 20
 AND ProductName LIKE 'c%';
+
+I augmented the program to include another search condition to include those rows from the products table which don't just have a price 
+of 10 to 20, but also have the ProductName column have a value that starts with c. 
+If both of these conditions are true, then those rows are incldued in the result set.
 
 -------Augmeted Sample Output:
 ProductID ProductName SupplierID CategoryID Unit Price
