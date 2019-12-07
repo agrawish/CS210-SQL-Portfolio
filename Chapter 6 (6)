@@ -267,7 +267,7 @@ Pacific Bell			111-92R-10096	16.33
 Pacific Bell			111-92R-10097	16.33
 Suburban Propane		111897		16.62
 ________________________________________________________________________________________________________________________________
-SQL Query from Murach's SQL Server 2016 for Developers page 
+SQL Query from Murach's SQL Server 2016 for Developers page 203
 --This query selects the latest invoice for each particular vendor from thre Vendors table
 if the vendor's ID matches in the Vendors and Invocies table
 
