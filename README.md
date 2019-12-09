@@ -1,4 +1,7 @@
 Database Fundamentals class respository
+
+50 total portfolio pieces
+
 The portfolio project must contain:
 1.the original source code of the sample program (as the first check in version)
 2. document the source and (if possible) the author of the sample program
