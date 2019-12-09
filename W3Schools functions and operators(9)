@@ -326,3 +326,28 @@ Nielson                        	NULL
 Nat Assoc of College Stores	    NULL
 
 _________________________________________________________________________________________________________________________
+SQL Query from W3Schools https://www.w3schools.com/sql/func_sqlserver_difference.asp
+--This query shows how similar two expresions are (in this case two words) by returning an integer from 0-4 to represent almost 
+no similarity to really string similarity by the use of the DIFFERENCE function
+
+SELECT DIFFERENCE('Juice','Banana');
+
+This query will use the DIFFERENCE function on the expressions 'Juice' and 'Banana' to find out how similar 
+they are. If they are very similar the integer returned by this query will be 4. If they are completely different with very little
+similarity, then thr query wil return a 0. The range is from 0-4 depending on the similarity. Here it is 2.
+
+----Sample output:
+        2
+        
+Augmented Code:
+SELECT DIFFERENCE('Ishi','Khushi');
+
+I changed this code by changing the two values to compare to 'Ishi' and 'Khushi' to see how similar they were. It turns out they 
+are more similar then the previous two values and thus the integer returned was a 3. 
+
+------Augmented Sample Output:
+       3
+       
+_____________________________________________________________________________________________________________________________________
+       
+
